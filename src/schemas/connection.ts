@@ -24,3 +24,21 @@ export const DestinationConnection = z.object({
 });
 
 export type DestinationConnection = z.infer<typeof DestinationConnection>;
+
+export const Headers = z.object({
+  key: z.string(),
+  value: z.string(),
+});
+export const data = z.object({
+  key: z.string(),
+  value: z.any(),
+});
+export const ApiCall = z.object({
+  title: z.string(),
+  url: z.string(),
+  method: z.string(),
+  headers: z.array(Headers),
+  data: z.array(Headers),
+});
+
+export type ApiCall = z.infer<typeof ApiCall>;

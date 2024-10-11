@@ -1,5 +1,6 @@
 import { Edge } from "reactflow";
 import {
+  ApiCall,
   ConnectionString,
   DestinationConnection,
   FileManagement,
@@ -8,6 +9,7 @@ import {
   fetchDatabaseConnectionApi,
   fetchDestinationConnectionApi,
   fetchFileConvertApi,
+  postApiCall,
 } from "../api/nodeApis";
 
 type Files = {
@@ -70,7 +72,6 @@ export const runNode = async (
     // console.log("Request to file convert API:", req);
     // console.log("Request to file convert API:", req);
     const resp = await fetchFileConvertApi(req);
-    const response = resp.data;
 
     if (resp) {
       responseData = {
@@ -111,11 +112,61 @@ export const runNode = async (
     };
     console.log("Request to destination connection API:", req);
     const resp = await fetchDestinationConnectionApi(req);
-    // console.log("Response from destination connection API:", resp.content1);
+    console.log("Response from destination connection API:", resp.content1);
     if (resp) {
       responseData = {
         ...inputData,
         status: "success",
+      };
+    } else {
+      responseData = {
+        ...inputData,
+        status: "error",
+      };
+    }
+  } else if (currentNode.type === "apiCall") {
+    const headers = currentNode.data.headers.reduce(
+      (
+        acc: { [key: string]: string },
+        header: { key: string; value: string }
+      ) => {
+        acc[header.key] = header.value;
+        return acc;
+      },
+      {}
+    );
+    const data =
+      currentNode.data.data.length > 0
+        ? currentNode.data.data.reduce(
+            (
+              acc: { [key: string]: string },
+              header: { key: string; value: string }
+            ) => {
+              acc[header.key] = header.value;
+              return acc;
+            }
+          )
+        : {};
+
+    const req = {
+      title: currentNode.data.title,
+      method: currentNode.data.method,
+      url: currentNode.data.url,
+      headers: headers,
+      data: data,
+    };
+    console.log("Request to API:", req);
+    const resp = await postApiCall(req);
+    console.log("Response from API:", resp);
+    if (resp) {
+      responseData = {
+        ...inputData,
+        status: "success",
+        file: {
+          filename: resp.data[0].filename,
+          filetype: resp.data[0].filetype,
+          content: resp.data[0].content,
+        },
       };
     } else {
       responseData = {

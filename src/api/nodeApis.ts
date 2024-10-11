@@ -1,5 +1,6 @@
 import axios from "axios";
 import {
+  ApiCall,
   ConnectionString,
   DestinationConnection,
   FileManagement,
@@ -41,13 +42,12 @@ export const fetchDestinationConnectionApi = async (
       try {
         let base64 = base;
         if (fileType === "application/json") {
-          base64 = btoa(base); // Ensure the base64 string is correctly encoded
+          base64 = btoa(unescape(encodeURIComponent(base)));
         } else if (fileType === "text/plain") {
-          base64 = btoa(unescape(encodeURIComponent(base))); // Ensure the base64 string is correctly encoded
+          base64 = btoa(unescape(encodeURIComponent(base)));
         } else if (fileType === "application/xml" || fileType === "text/xml") {
-          base64 = btoa(unescape(encodeURIComponent(base))); // Ensure the base64 string is correctly encoded
-        } else if (fileType === "text/csv") {
-          base64 = btoa(unescape(encodeURIComponent(base))); // Ensure the base64 string is correctly encoded
+          base64 = btoa(unescape(encodeURIComponent(base)));
+          base64 = btoa(unescape(encodeURIComponent(base)));
         }
         // Check if the string contains a base64 prefix (e.g., "data:<filetype>;base64,") and remove it
         const cleanedBase64 = base64.includes("base64,")
@@ -108,5 +108,15 @@ export const fetchDestinationConnectionApi = async (
     return response.data;
   } catch (error) {
     console.error("Error fetching destination connection:", error);
+  }
+};
+
+export const postApiCall = async (req: any) => {
+  try {
+    console.log(req);
+    const response = await axios.post(`${API_URL}/executeApi/`, req);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching API call:", error);
   }
 };

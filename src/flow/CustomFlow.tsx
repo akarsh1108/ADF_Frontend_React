@@ -17,12 +17,14 @@ import initialEdges from "../data/initialEdges";
 import { runNode } from "./nodeRuner";
 import DestinationConnectionNode from "../components/nodes/DestinationConnectionNode";
 import APICallNode from "../components/nodes/ApiCallNode";
+import JupyterNotebookExecuteNode from "../components/nodes/JupyterNotebookNode";
 
 const nodeTypes = {
   databaseConnection: DatabaseConnectionNode,
   fileManagement: FileManagementNode,
   destinationConnection: DestinationConnectionNode,
   apiCall: APICallNode,
+  jupyterNotebookExecute: JupyterNotebookExecuteNode,
 };
 
 const CustomFlow: React.FC = () => {

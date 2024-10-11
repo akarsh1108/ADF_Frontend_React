@@ -4,17 +4,17 @@ import { FiCheckCircle, FiXCircle } from "react-icons/fi";
 
 type APICallData = {
   title: string;
-  apiUrl: string;
+  url: string;
   method: string;
   headers: { key: string; value: string }[];
-  data: { key: string; value: string }[];
+  data: { key: string; value: any }[];
   status: "idle" | "success" | "error";
   onRunNode?: (inputData: any) => void;
   onUpdate?: (updatedData: any) => void;
 };
 
 const APICallNode: React.FC<NodeProps<APICallData>> = ({ data }) => {
-  const [apiUrl, setApiUrl] = useState(data.apiUrl || "");
+  const [apiUrl, setApiUrl] = useState(data.url || "");
   const [method, setMethod] = useState(data.method || "POST");
   const [headers, setHeaders] = useState(
     data.headers || [{ key: "", value: "" }]
@@ -22,7 +22,17 @@ const APICallNode: React.FC<NodeProps<APICallData>> = ({ data }) => {
   const [fields, setFields] = useState(data.data || [{ key: "", value: "" }]);
   const [text, setText] = useState(data.title || "");
 
-  // Add new header field
+  useEffect(() => {
+    data.onUpdate &&
+      data.onUpdate({
+        url: apiUrl,
+        method,
+        headers,
+        fields,
+        title: text,
+      });
+  }, [apiUrl, method, headers, fields, text]);
+
   const handleAddHeader = () => {
     setHeaders([...headers, { key: "", value: "" }]);
   };
@@ -65,28 +75,15 @@ const APICallNode: React.FC<NodeProps<APICallData>> = ({ data }) => {
   };
 
   // Run API call
-  const handleRunNode = async () => {
-    // const headersObj = headers.reduce((acc, header) => {
-    //   if (header.key) acc[header.key] = header.value;
-    //   return acc;
-    // }, {});
-    // const dataObj = fields.reduce((acc, field) => {
-    //   if (field.key) acc[field.key] = field.value;
-    //   return acc;
-    // }, {});
-    // const inputData = { apiUrl, method, headers: headersObj, data: dataObj };
-    // try {
-    //   const response = await axios({
-    //     method: method,
-    //     url: apiUrl,
-    //     headers: headersObj,
-    //     data: dataObj,
-    //   });
-    //   console.log("API Response:", response.data);
-    //   data.onRunNode && data.onRunNode(response.data);
-    // } catch (error) {
-    //   console.error("API Request Error:", error);
-    // }
+  const handleRunNode = () => {
+    const inputData = {
+      title: text,
+      url: apiUrl,
+      method: method,
+      headers: headers,
+      data: fields,
+    };
+    data.onRunNode && data.onRunNode(inputData);
   };
 
   return (

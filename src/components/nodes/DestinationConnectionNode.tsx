@@ -33,8 +33,10 @@ const DestinationConnectionNode: React.FC<
   const base64ToBlob = (base: string, fileType: string) => {
     try {
       let base64 = base;
+      // console.log("Base", base);
       if (fileType === "application/json") {
-        base64 = btoa(base); // Ensure the base64 string is correctly encoded
+        base64 = btoa(unescape(encodeURIComponent(base))); // Ensure the base64 string is correctly encoded
+        // console.log("Base633333333334", base);
       } else if (fileType === "text/plain") {
         base64 = btoa(unescape(encodeURIComponent(base))); // Ensure the base64 string is correctly encoded
       } else if (fileType === "application/xml" || fileType === "text/xml") {
@@ -137,7 +139,7 @@ const DestinationConnectionNode: React.FC<
       content1: data.file.contentBytes,
     };
 
-    console.log("Running Destination Connection Node with: ", inputData);
+    // console.log("Running Destination Connection Node with: ", inputData);
     data.onRunNode && data.onRunNode(inputData);
   };
 
