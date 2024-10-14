@@ -120,3 +120,20 @@ export const postApiCall = async (req: any) => {
     console.error("Error fetching API call:", error);
   }
 };
+
+export const uploadJupyterNotebookApi = async (file: File) => {
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const response = await axios.post(`${API_URL}/compileNotebook/`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("Error uploading Jupyter notebook:", error);
+  }
+};

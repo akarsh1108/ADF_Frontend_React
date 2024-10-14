@@ -136,7 +136,7 @@ const DestinationConnectionNode: React.FC<
       filename: data.file.filename,
       fileformat: data.file.filetype,
       content: data.file.content,
-      content1: data.file.contentBytes,
+      // content1: data.file.contentBytes,
     };
 
     // console.log("Running Destination Connection Node with: ", inputData);

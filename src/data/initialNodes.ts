@@ -92,14 +92,12 @@ const initialNodes: Node[] = [
       fileName: "",
       files: [
         {
-          id: 1,
           filename: "Notebook1.ipynb",
           content: "Base64EncodedNotebook1Content",
           fileType: "application/json",
           databaseId: 1,
         },
         {
-          id: 2,
           filename: "Notebook2.ipynb",
           content: "Base64EncodedNotebook2Content",
           fileType: "application/json",
@@ -112,6 +110,23 @@ const initialNodes: Node[] = [
       },
       onRunNode: (inputData: any) => {
         console.log("Running Jupyter Notebook with: ", inputData);
+      },
+    },
+  },
+  {
+    id: "6",
+    type: "folderUploadNode",
+    position: { x: 600, y: 300 },
+    data: {
+      filename: "",
+      fileType: "",
+      files: [],
+      status: "idle",
+      onUpdate: (updatedData: any) => {
+        console.log("Folder upload node updated: ", updatedData);
+      },
+      onRunNode: (inputData: any) => {
+        console.log("Running folder upload node with: ", inputData);
       },
     },
   },

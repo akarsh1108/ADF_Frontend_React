@@ -10,6 +10,7 @@ import {
   fetchDestinationConnectionApi,
   fetchFileConvertApi,
   postApiCall,
+  uploadJupyterNotebookApi,
 } from "../api/nodeApis";
 
 type Files = {
@@ -157,15 +158,15 @@ export const runNode = async (
     };
     console.log("Request to API:", req);
     const resp = await postApiCall(req);
-    console.log("Response from API:", resp);
+    console.log("Response from API:", JSON.stringify(resp.data, null, 2));
     if (resp) {
       responseData = {
         ...inputData,
         status: "success",
         file: {
-          filename: resp.data[0].filename,
-          filetype: resp.data[0].filetype,
-          content: resp.data[0].content,
+          filename: resp.data.filename,
+          filetype: resp.data.filetype,
+          content: JSON.stringify(resp.data, null, 2),
         },
       };
     } else {
@@ -174,6 +175,54 @@ export const runNode = async (
         status: "error",
       };
     }
+  } else if (currentNode.type === "jupyterNotebookExecute") {
+    // Handle Jupyter Notebook Execute node
+    console.log(
+      "Running Jupyter Notebook Execute node. Input data:",
+      inputData
+    );
+    const req = {
+      source: currentNode.data.source,
+      filename: inputData.fileName,
+      fileformat: inputData.fileformat,
+      content: inputData.fileContent,
+      File: inputData.file,
+    };
+
+    console.log("Request to Jupyter Notebook Execute API:", req);
+    const resp = await uploadJupyterNotebookApi(req.File);
+    console.log("Response from Jupyter Notebook Execute API:", resp);
+    if (resp) {
+      responseData = {
+        ...inputData,
+        status: resp.error_details ? "error" : "success",
+        file: {
+          message: resp.message,
+          successful: resp.last_successful_cell,
+          errorDetails: resp.error_details,
+        },
+      };
+    } else {
+      responseData = {
+        ...inputData,
+        status: "error",
+      };
+    }
+  } else if (currentNode.type === "folderUploadNode") {
+    responseData = {
+      ...inputData,
+      status: "success",
+      file: {
+        filename: currentNode.data.filename,
+        filetype: currentNode.data.filetype,
+        content: currentNode.data.file.file.read,
+      },
+    };
+  } else {
+    responseData = {
+      ...inputData,
+      status: "error",
+    };
   }
 
   // Now pass the data to the next nodes

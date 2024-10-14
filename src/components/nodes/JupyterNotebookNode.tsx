@@ -28,6 +28,7 @@ const JupyterNotebookExecuteNode: React.FC<NodeProps<JupyterNotebookData>> = ({
   const [fileMode, setFileMode] = useState<"upload" | "dropdown">("dropdown");
   const [selectedFileId, setSelectedFileId] = useState<string | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [file, setFile] = useState<File | null>(null);
 
   useEffect(() => {
     data.onUpdate &&
@@ -44,16 +45,24 @@ const JupyterNotebookExecuteNode: React.FC<NodeProps<JupyterNotebookData>> = ({
     const selectedFileObj = data.files.find(
       (file) => file.id === Number(selectedId)
     );
+    const selectOne = data.files.find((file) => file.id === Number(selectedId));
+    if (selectOne) {
+      data.files = [selectOne]; // Select only one file from the list
+    }
 
     if (selectedFileObj) {
       setFileName(selectedFileObj.filename);
       setSelectedFileId(selectedId);
-      setFileContent(atob(selectedFileObj.content)); // Convert base64 to string
+      setFileContent(atob(selectedFileObj.content));
+      // setFile(
+      //   new File([atob(selectedFileObj.content)], selectedFileObj.filename)
+      // );
     }
   };
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files && e.target.files[0];
+    setFile(file);
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
@@ -68,6 +77,8 @@ const JupyterNotebookExecuteNode: React.FC<NodeProps<JupyterNotebookData>> = ({
     const inputData = {
       fileName,
       fileContent,
+      fileFormat: "ipynb",
+      file: file,
     };
     data.onRunNode && data.onRunNode(inputData);
   };

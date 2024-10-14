@@ -18,6 +18,7 @@ import { runNode } from "./nodeRuner";
 import DestinationConnectionNode from "../components/nodes/DestinationConnectionNode";
 import APICallNode from "../components/nodes/ApiCallNode";
 import JupyterNotebookExecuteNode from "../components/nodes/JupyterNotebookNode";
+import FolderUploadNode from "../components/nodes/UploadeNode";
 
 const nodeTypes = {
   databaseConnection: DatabaseConnectionNode,
@@ -25,6 +26,7 @@ const nodeTypes = {
   destinationConnection: DestinationConnectionNode,
   apiCall: APICallNode,
   jupyterNotebookExecute: JupyterNotebookExecuteNode,
+  folderUploadNode: FolderUploadNode,
 };
 
 const CustomFlow: React.FC = () => {
@@ -93,6 +95,7 @@ const CustomFlow: React.FC = () => {
         return true;
       } catch (error) {
         // Update node status to error if execution fails
+
         updateNodeStatus(currentNodeId, "error");
         console.error(`Error executing node ${currentNodeId}:`, error);
         return false;
