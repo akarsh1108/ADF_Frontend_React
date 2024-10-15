@@ -116,7 +116,7 @@ const initialNodes: Node[] = [
   {
     id: "6",
     type: "folderUploadNode",
-    position: { x: 600, y: 300 },
+    position: { x: 0, y: 300 },
     data: {
       filename: "",
       fileType: "",

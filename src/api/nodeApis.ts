@@ -137,3 +137,12 @@ export const uploadJupyterNotebookApi = async (file: File) => {
     console.error("Error uploading Jupyter notebook:", error);
   }
 };
+
+export const termialLogs = async (req: any) => {
+  try {
+    const response = await axios.post(`${API_URL}/catching-logs/`, req);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching terminal logs:", error);
+  }
+};

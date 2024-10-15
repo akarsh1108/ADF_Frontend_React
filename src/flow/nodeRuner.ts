@@ -41,7 +41,6 @@ export const runNode = async (
       location: currentNode.data.location,
     };
     try {
-      //   console.log("Making API request with req:", req);
       const resp = await fetchDatabaseConnectionApi(req);
 
       if (resp) {
@@ -54,6 +53,7 @@ export const runNode = async (
             databaseId: req.databaseId,
           })),
         };
+
         console.log("Files received from API:", responseData);
       }
     } catch (error) {
