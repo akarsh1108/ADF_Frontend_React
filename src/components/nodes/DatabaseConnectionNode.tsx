@@ -51,7 +51,7 @@ const DatabaseConnectionNode: React.FC<NodeProps<DatabaseConnectionData>> = ({
       <Handle type="source" position={Position.Top} />
       <Handle type="target" position={Position.Left} />
       <Handle type="target" position={Position.Bottom} />
-      <h4>Connection Node</h4>
+      <h4>Connection Activity</h4>
       <label>Integration Database: </label>
       <select
         value={selectedDatabase}

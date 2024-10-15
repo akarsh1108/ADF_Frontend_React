@@ -156,7 +156,7 @@ const DestinationConnectionNode: React.FC<
       <Handle type="target" position={Position.Left} />
       <Handle type="target" position={Position.Bottom} />
 
-      <h4>Destination Connection Node</h4>
+      <h4>Destination Connection Activity</h4>
 
       <label>File Name: {data.file.filename}</label>
       <br />

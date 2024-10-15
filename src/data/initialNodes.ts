@@ -130,6 +130,24 @@ const initialNodes: Node[] = [
       },
     },
   },
+  {
+    id: "7",
+    type: "toggleNode",
+    position: { x: 1100, y: 300 },
+    data: {
+      selectedOption: "event",
+      schedulerTime: null,
+      copyCount: null,
+      databaseId: 1,
+      status: "idle",
+      onUpdate: (updatedData: any) => {
+        console.log("Toggle node updated: ", updatedData);
+      },
+      onRunNode: (inputData: any) => {
+        console.log("Running toggle node with: ", inputData);
+      },
+    },
+  },
 ];
 
 export default initialNodes;

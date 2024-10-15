@@ -132,7 +132,7 @@ const FileManagementNode: React.FC<NodeProps<FileManagementData>> = ({
       <Handle type="source" position={Position.Top} />
       <Handle type="target" position={Position.Left} />
       <Handle type="target" position={Position.Bottom} />
-      <h4>File Management Node</h4>
+      <h4>File Management Activity</h4>
 
       <label>File: </label>
       <select value={selectedFile} onChange={handleFileSelect}>

@@ -19,6 +19,7 @@ import DestinationConnectionNode from "../components/nodes/DestinationConnection
 import APICallNode from "../components/nodes/ApiCallNode";
 import JupyterNotebookExecuteNode from "../components/nodes/JupyterNotebookNode";
 import FolderUploadNode from "../components/nodes/UploadeNode";
+import ToggleNode from "../components/nodes/CopySchedulers";
 
 const nodeTypes = {
   databaseConnection: DatabaseConnectionNode,
@@ -27,6 +28,7 @@ const nodeTypes = {
   apiCall: APICallNode,
   jupyterNotebookExecute: JupyterNotebookExecuteNode,
   folderUploadNode: FolderUploadNode,
+  toggleNode: ToggleNode,
 };
 
 const CustomFlow: React.FC = () => {

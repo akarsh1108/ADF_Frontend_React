@@ -1,7 +1,6 @@
 import { ReactFlowProvider } from "reactflow";
 import CustomFlow from "./flow/CustomFlow";
 import Header from "./components/Header";
-import Sidebar from "./components/Sidebar";
 import Terminal from "./components/Terminal";
 import { useEffect } from "react";
 import Pusher from "pusher-js";
@@ -18,22 +17,22 @@ const App = () => {
   });
   return (
     <div className="relative w-screen h-screen">
-      {/* Header goes on top with fixed height */}
-      <Header />
-      <div className="absolute top-16 left-0 right-0 bottom-16 grid grid-cols-5 gap-0">
-        {/* Sidebar with fixed width */}
-        <Sidebar />
-
+      {/* Header takes 10% of the height */}
+      <div className="h-[8%]">
+        <Header />
+      </div>
+      <div className="absolute top-[8%] left-0 right-[30%] bottom-0 grid grid-cols-5 gap-0">
         {/* React Flow takes the remaining space */}
-        <div className="col-span-4 p-4 overflow-auto">
+        <div className="col-span-5 p-4 overflow-auto h-full">
           <ReactFlowProvider>
             <CustomFlow />
           </ReactFlowProvider>
         </div>
       </div>
-
-      {/* Terminal goes at the bottom with fixed height */}
-      <Terminal />
+      {/* Terminal takes 30% of the width */}
+      <div className="absolute top-[8%] right-0 bottom-0 w-[30%]">
+        <Terminal />
+      </div>
     </div>
   );
 };

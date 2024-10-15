@@ -102,7 +102,7 @@ const JupyterNotebookExecuteNode: React.FC<NodeProps<JupyterNotebookData>> = ({
       <Handle type="source" position={Position.Right} />
       <Handle type="target" position={Position.Left} />
 
-      <h4>Jupyter Notebook Execute Node</h4>
+      <h4>Jupyter Notebook Execute Activty</h4>
 
       {/* Mode Selection */}
       <label>Input Mode: </label>

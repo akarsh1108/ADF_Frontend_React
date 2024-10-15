@@ -99,7 +99,7 @@ const APICallNode: React.FC<NodeProps<APICallData>> = ({ data }) => {
       <Handle type="target" position={Position.Left} />
       <Handle type="target" position={Position.Bottom} />
 
-      <h4>API Call Node</h4>
+      <h4>API Call Actvity</h4>
 
       <label>Title: </label>
       <input

@@ -2,6 +2,7 @@ import { Edge } from "reactflow";
 import {
   ApiCall,
   ConnectionString,
+  data,
   DestinationConnection,
   FileManagement,
 } from "../schemas/connection";
@@ -10,6 +11,7 @@ import {
   fetchDestinationConnectionApi,
   fetchFileConvertApi,
   postApiCall,
+  uploadFiles,
   uploadJupyterNotebookApi,
 } from "../api/nodeApis";
 
@@ -45,6 +47,7 @@ export const runNode = async (
 
       if (resp) {
         responseData = {
+          databaseId: req.databaseId,
           files: resp.map((file: Files) => ({
             id: file.id,
             filename: file.filename,
@@ -209,20 +212,35 @@ export const runNode = async (
       };
     }
   } else if (currentNode.type === "folderUploadNode") {
-    responseData = {
-      ...inputData,
-      status: "success",
-      file: {
-        filename: currentNode.data.filename,
-        filetype: currentNode.data.filetype,
-        content: currentNode.data.file.file.read,
-      },
-    };
-  } else {
-    responseData = {
-      ...inputData,
-      status: "error",
-    };
+    console.log("Folder Upload Nowwwwwwwwwwwwwwwwwwwwwwwwwde", inputData);
+    if (inputData.files && inputData.files.length > 0) {
+      const file = inputData.files[0];
+
+      const req = {
+        // filename: file.filename,
+        // filetype: file.format,
+        // content: file.content,
+        databaseId: file.databaseId,
+        file: file.file,
+      };
+
+      const resp = await uploadFiles(req.databaseId, req.file);
+      console.log("Response from upload file API:", resp);
+      responseData = {
+        ...inputData,
+        status: "success",
+        file: {
+          filename: file.filename,
+          filetype: file.filetype,
+          content: file.content,
+        },
+      };
+    } else {
+      responseData = {
+        ...inputData,
+        status: "error",
+      };
+    }
   }
 
   // Now pass the data to the next nodes

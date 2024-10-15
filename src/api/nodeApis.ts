@@ -146,3 +146,24 @@ export const termialLogs = async (req: any) => {
     console.error("Error fetching terminal logs:", error);
   }
 };
+
+export const uploadFiles = async (id: number, file: File) => {
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const response = await axios.post(
+      `${API_URL}/upload-file/${id}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Error uploading file:", error);
+  }
+};
