@@ -146,9 +146,17 @@ const DestinationConnectionNode: React.FC<
   return (
     <div
       style={{
-        border: "1px solid #ddd",
-        padding: "10px",
+        width: "300px",
+        border: "1px solid rgba(196, 110, 255, 0.5)",
+        background: "rgba(0, 0, 50, 0.3)", // Soft blue background for glass effect
+        backdropFilter: "blur(10px)",
+        boxShadow: "0 4px 10px rgba(224, 183, 255, 0.2)", // Enhanced shadow effect
+        borderRadius: "15px",
+        padding: "15px",
         position: "relative",
+        color: "#fff",
+        fontFamily: "Arial, sans-serif",
+        margin: "20px auto", // Centered with some margin
       }}
     >
       <Handle type="source" position={Position.Right} />
@@ -156,46 +164,152 @@ const DestinationConnectionNode: React.FC<
       <Handle type="target" position={Position.Left} />
       <Handle type="target" position={Position.Bottom} />
 
-      <h4>Destination Connection Activity</h4>
+      <h4
+        style={{
+          fontSize: "16px",
+          fontWeight: "bold",
+          marginBottom: "15px",
+          textAlign: "center",
+        }}
+      >
+        Destination Connection Activity
+      </h4>
 
-      <label>File Name: {data.file.filename}</label>
-      <br />
-      <label>File Format: {data.file.filetype}</label>
-      <br />
-      <label>Integration Database: </label>
+      <label
+        style={{ display: "block", marginBottom: "8px", fontSize: "14px" }}
+      >
+        File Name: {data.file.filename}
+      </label>
+      <label
+        style={{ display: "block", marginBottom: "8px", fontSize: "14px" }}
+      >
+        File Format: {data.file.filetype}
+      </label>
+
+      <label>Integration Database:</label>
       <select
         value={selectedDatabase}
         onChange={(e) => setSelectedDatabase(e.target.value)}
+        style={{
+          width: "100%",
+          padding: "8px",
+          margin: "8px 0",
+          border: "1px solid rgba(196, 110, 255, 0.5)",
+          borderRadius: "8px",
+          background: "rgba(224, 183, 255, 0.2)",
+          color: "#fff",
+        }}
       >
         <option value="SSMS">SSMS</option>
       </select>
-      <br />
 
-      <label>Connection Url: </label>
+      <label>Connection Url:</label>
       <select
         value={databaseId}
         onChange={(e) => setDatabaseId(Number(e.target.value))}
+        style={{
+          width: "100%",
+          padding: "8px",
+          margin: "8px 0",
+          border: "1px solid rgba(196, 110, 255, 0.5)",
+          borderRadius: "8px",
+          background: "rgba(224, 183, 255, 0.2)",
+          color: "#fff",
+        }}
       >
         <option value={1}>DB1</option>
         <option value={2}>DB2</option>
       </select>
-      <br />
 
-      <label>Location: </label>
-      <select value={location} onChange={(e) => setLocation(e.target.value)}>
+      <label>Location:</label>
+      <select
+        value={location}
+        onChange={(e) => setLocation(e.target.value)}
+        style={{
+          width: "100%",
+          padding: "8px",
+          margin: "8px 0",
+          border: "1px solid rgba(196, 110, 255, 0.5)",
+          borderRadius: "8px",
+          background: "rgba(224, 183, 255, 0.2)",
+          color: "#fff",
+        }}
+      >
         <option value="Source">Source</option>
         <option value="Destination">Destination</option>
       </select>
-      <br />
 
-      <button onClick={handleRunNode}>Run Activity</button>
+      {/* Buttons on the same row */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginTop: "10px",
+        }}
+      >
+        <button
+          onClick={handleRunNode}
+          style={{
+            flex: "1", // Allow buttons to grow equally
+            marginRight: "5px", // Small space between buttons
+            padding: "10px",
+            backgroundColor: "rgba(0, 200, 150, 0.6)", // Teal color for Run Activity
+            border: "none",
+            borderRadius: "8px",
+            color: "#fff",
+            fontWeight: "bold",
+            cursor: "pointer",
+            transition: "background 0.3s",
+          }}
+          onMouseOver={(e) =>
+            ((e.target as HTMLButtonElement).style.backgroundColor =
+              "rgba(0, 200, 150, 0.8)")
+          }
+          onMouseOut={(e) =>
+            ((e.target as HTMLButtonElement).style.backgroundColor =
+              "rgba(0, 200, 150, 0.6)")
+          }
+        >
+          Run Activity
+        </button>
 
-      {fileContentUrl && (
-        <>
-          <button onClick={handlePreview}>Preview File</button>
-          <button onClick={handleDownload}>Download File</button>
-        </>
-      )}
+        {fileContentUrl && (
+          <>
+            <button
+              onClick={handlePreview}
+              style={{
+                flex: "1",
+                marginRight: "5px",
+                padding: "10px",
+                backgroundColor: "rgba(0, 150, 255, 0.6)", // Light blue for Preview
+                border: "none",
+                borderRadius: "8px",
+                color: "#fff",
+                fontWeight: "bold",
+                cursor: "pointer",
+              }}
+            >
+              Preview
+            </button>
+
+            <button
+              onClick={handleDownload}
+              style={{
+                flex: "1",
+                padding: "10px",
+                backgroundColor: "rgba(0, 150, 255, 0.6)", // Light blue for Download
+                border: "none",
+                borderRadius: "8px",
+                color: "#fff",
+                fontWeight: "bold",
+                cursor: "pointer",
+              }}
+            >
+              Download
+            </button>
+          </>
+        )}
+      </div>
 
       {data.status === "success" && (
         <FiCheckCircle
@@ -209,15 +323,43 @@ const DestinationConnectionNode: React.FC<
       )}
 
       {isDialogOpen && fileContentUrl && (
-        <div className="modal">
+        <div
+          className="modal"
+          style={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            background: "rgba(255, 255, 255, 0.1)",
+            backdropFilter: "blur(10px)",
+            padding: "20px",
+            borderRadius: "10px",
+            boxShadow: "0 4px 10px rgba(0, 0, 0, 0.3)",
+          }}
+        >
           <div className="modal-content">
-            <h4>Preview: {data.file.filename}</h4>
+            <h4 style={{ color: "#fff" }}>Preview: {data.file.filename}</h4>
             <iframe
               src={fileContentUrl}
-              style={{ width: "100%", height: "500px" }}
+              style={{ width: "100%", height: "500px", borderRadius: "10px" }}
               title="file-preview"
             />
-            <button onClick={() => setIsDialogOpen(false)}>Close</button>
+            <button
+              onClick={() => setIsDialogOpen(false)}
+              style={{
+                marginTop: "10px",
+                padding: "10px",
+                width: "100%",
+                backgroundColor: "rgba(255, 255, 255, 0.2)",
+                border: "none",
+                borderRadius: "8px",
+                color: "#fff",
+                fontWeight: "bold",
+                cursor: "pointer",
+              }}
+            >
+              Close
+            </button>
           </div>
         </div>
       )}

@@ -151,7 +151,7 @@ const CustomFlow: React.FC = () => {
   }));
 
   return (
-    <div style={{ height: "100vh" }}>
+    <div style={{ height: "100vh", backgroundColor: "#000000" }}>
       <ReactFlow
         nodes={nodesWithRunHandler}
         edges={edges}
