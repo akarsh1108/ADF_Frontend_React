@@ -24,6 +24,7 @@ const FolderUploadNode: React.FC<NodeProps<FolderUploadData>> = ({ data }) => {
   const [fileName, setFileName] = useState<string>("");
   useEffect(() => {
     if (data.onUpdate && file) {
+      // console.log(data);
       const fileDetails = [file].map((file) => ({
         fileName: file.name,
         fileType: file.type,
@@ -32,7 +33,7 @@ const FolderUploadNode: React.FC<NodeProps<FolderUploadData>> = ({ data }) => {
         content: fileContent,
       }));
       data.onUpdate({
-        files: fileDetails,
+        files: [fileDetails],
       });
     }
   }, [file, fileContent, data]);
@@ -76,6 +77,7 @@ const FolderUploadNode: React.FC<NodeProps<FolderUploadData>> = ({ data }) => {
   };
 
   const handleRunNode = () => {
+    console.log("Running Folder Upload Node with: ", data);
     const inputData = {
       files: [
         {
@@ -93,29 +95,87 @@ const FolderUploadNode: React.FC<NodeProps<FolderUploadData>> = ({ data }) => {
   return (
     <div
       style={{
-        border: "1px solid #ddd",
-        padding: "10px",
+        border: "1px solid rgba(196, 110, 255, 0.5)",
+        background: "rgba(0, 0, 50, 0.3)", // Glass effect background
+        backdropFilter: "blur(10px)",
+        boxShadow: "0 4px 10px rgba(224, 183, 255, 0.2)", // Enhanced shadow
+        borderRadius: "15px",
+        padding: "15px",
+        width: "300px",
         position: "relative",
+        color: "#fff",
+        fontFamily: "Arial, sans-serif",
+        margin: "20px auto",
+        transition: "transform 0.3s ease-in-out",
+        animation: "glowBorder 3s infinite, fadeIn 1s ease-in-out", // Combined animations
       }}
+      onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
+      onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
     >
       <Handle type="source" position={Position.Right} />
       <Handle type="source" position={Position.Top} />
       <Handle type="target" position={Position.Left} />
       <Handle type="target" position={Position.Bottom} />
-      <h4>File Upload Activity</h4>
 
-      <label>Upload File: </label>
+      <h4
+        style={{
+          fontSize: "16px",
+          fontWeight: "bold",
+          marginBottom: "15px",
+          textAlign: "center",
+        }}
+      >
+        File Upload Activity
+      </h4>
+
+      <label
+        style={{ display: "block", marginBottom: "8px", fontSize: "14px" }}
+      >
+        Upload File:
+      </label>
       <input
         type="file"
         multiple={false} // Disable multiple uploads
         onChange={handleFolderUpload}
         accept=".csv,.txt,.json,.ipynb"
+        style={{
+          width: "100%",
+          padding: "8px",
+          margin: "8px 0",
+          border: "1px solid rgba(196, 110, 255, 0.5)",
+          borderRadius: "8px",
+          background: "rgba(224, 183, 255, 0.2)",
+          color: "#fff",
+        }}
       />
       <br />
 
-      <button onClick={handleRunNode} style={{ marginTop: "10px" }}>
+      <button
+        onClick={handleRunNode}
+        style={{
+          padding: "10px",
+          backgroundColor: "rgba(0, 150, 255, 0.6)", // Blue background for Run button
+          border: "none",
+          borderRadius: "8px",
+          color: "#fff",
+          fontWeight: "bold",
+          cursor: "pointer",
+          width: "100%",
+          marginTop: "10px",
+          transition: "background 0.3s",
+        }}
+        onMouseOver={(e) =>
+          ((e.target as HTMLButtonElement).style.backgroundColor =
+            "rgba(0, 150, 255, 0.8)")
+        }
+        onMouseOut={(e) =>
+          ((e.target as HTMLButtonElement).style.backgroundColor =
+            "rgba(0, 150, 255, 0.6)")
+        }
+      >
         Run Activity
       </button>
+
       {data.status === "success" && (
         <FiCheckCircle
           style={{ color: "green", position: "absolute", top: 5, right: 5 }}
@@ -126,6 +186,35 @@ const FolderUploadNode: React.FC<NodeProps<FolderUploadData>> = ({ data }) => {
           style={{ color: "red", position: "absolute", top: 5, right: 5 }}
         />
       )}
+      <style>
+        {`
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+  
+      @keyframes glowBorder {
+        0% {
+          border-color: rgba(196, 110, 255, 0.5);
+          box-shadow: 0 0 5px rgba(196, 110, 255, 0.5);
+        }
+        50% {
+          border-color: rgba(196, 110, 255, 1);
+          box-shadow: 0 0 15px rgba(196, 110, 255, 1);
+        }
+        100% {
+          border-color: rgba(196, 110, 255, 0.5);
+          box-shadow: 0 0 5px rgba(196, 110, 255, 0.5);
+        }
+      }
+    `}
+      </style>
     </div>
   );
 };

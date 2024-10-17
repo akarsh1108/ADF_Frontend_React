@@ -5,15 +5,18 @@ import {
   data,
   DestinationConnection,
   FileManagement,
+  Scheduling,
 } from "../schemas/connection";
 import {
   fetchDatabaseConnectionApi,
   fetchDestinationConnectionApi,
   fetchFileConvertApi,
   postApiCall,
+  schedulingActivity,
   uploadFiles,
   uploadJupyterNotebookApi,
 } from "../api/nodeApis";
+import { input } from "framer-motion/client";
 
 type Files = {
   id: number;
@@ -40,7 +43,7 @@ export const runNode = async (
     const req: ConnectionString = {
       database: currentNode.data.selectedDatabase,
       databaseId: currentNode.data.databaseId,
-      location: currentNode.data.location,
+      location: currentNode.data.location || "Source",
     };
     try {
       const resp = await fetchDatabaseConnectionApi(req);
@@ -212,7 +215,7 @@ export const runNode = async (
       };
     }
   } else if (currentNode.type === "folderUploadNode") {
-    console.log("Folder Upload Nowwwwwwwwwwwwwwwwwwwwwwwwwde", inputData);
+    console.log("Folder Upload ", inputData);
     if (inputData.files && inputData.files.length > 0) {
       const file = inputData.files[0];
 
@@ -223,7 +226,7 @@ export const runNode = async (
         databaseId: file.databaseId,
         file: file.file,
       };
-
+      console.log("Request to upload file API:", req);
       const resp = await uploadFiles(req.databaseId, req.file);
       console.log("Response from upload file API:", resp);
       responseData = {
@@ -241,6 +244,23 @@ export const runNode = async (
         status: "error",
       };
     }
+  } else if (currentNode.type === "toggleNode") {
+    console.log("Toggle Node ", inputData);
+    const req: Scheduling = {
+      destination: inputData.databaseId,
+      source: inputData.databaseId === 1 ? 2 : 1,
+      label: inputData.selectedOption,
+      interval: inputData.copyCount == null ? 1000000 : inputData.copyCount,
+      schedular:
+        inputData.schedulerTime == null ? 1000000 : inputData.schedulerTime,
+    };
+    console.log("Request to Scheduling API:", req);
+    const res = await schedulingActivity(req);
+    console.log("Response from Scheduling API:", res);
+    responseData = {
+      ...inputData,
+      status: "success",
+    };
   }
 
   // Now pass the data to the next nodes

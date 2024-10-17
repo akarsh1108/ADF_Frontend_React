@@ -21,7 +21,7 @@ const initialNodes: Node[] = [
   {
     id: "2",
     type: "fileManagement",
-    position: { x: 300, y: 0 },
+    position: { x: 360, y: 0 },
     data: {
       selectedFileId: 1015,
       fileName: "Example.txt",
@@ -39,7 +39,7 @@ const initialNodes: Node[] = [
   {
     id: "3",
     type: "destinationConnection",
-    position: { x: 800, y: 0 },
+    position: { x: 740, y: 0 },
     data: {
       file: {
         filename: "Example.txt",
@@ -61,7 +61,7 @@ const initialNodes: Node[] = [
   {
     id: "4",
     type: "apiCall",
-    position: { x: 400, y: 300 },
+    position: { x: 360, y: 430 },
     data: {
       title: "Data1",
       url: "https://api.example.com/data",
@@ -86,7 +86,7 @@ const initialNodes: Node[] = [
   {
     id: "5",
     type: "jupyterNotebookExecute",
-    position: { x: 800, y: 300 },
+    position: { x: 740, y: 430 },
     data: {
       selectedFile: "",
       fileName: "",
@@ -116,7 +116,7 @@ const initialNodes: Node[] = [
   {
     id: "6",
     type: "folderUploadNode",
-    position: { x: 0, y: 300 },
+    position: { x: 0, y: 430 },
     data: {
       filename: "",
       fileType: "",
@@ -135,10 +135,11 @@ const initialNodes: Node[] = [
     type: "toggleNode",
     position: { x: 1100, y: 300 },
     data: {
+      selectedDatabase: "SSMS",
+      databaseId: 1,
       selectedOption: "event",
       schedulerTime: null,
       copyCount: null,
-      databaseId: 1,
       status: "idle",
       onUpdate: (updatedData: any) => {
         console.log("Toggle node updated: ", updatedData);

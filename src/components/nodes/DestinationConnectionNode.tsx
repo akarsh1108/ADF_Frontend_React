@@ -147,7 +147,7 @@ const DestinationConnectionNode: React.FC<
     <div
       style={{
         width: "300px",
-        border: "1px solid rgba(196, 110, 255, 0.5)",
+        border: "1px solid rgba(196, 110, 255, 0.5)", // Initial border style
         background: "rgba(0, 0, 50, 0.3)", // Soft blue background for glass effect
         backdropFilter: "blur(10px)",
         boxShadow: "0 4px 10px rgba(224, 183, 255, 0.2)", // Enhanced shadow effect
@@ -157,7 +157,11 @@ const DestinationConnectionNode: React.FC<
         color: "#fff",
         fontFamily: "Arial, sans-serif",
         margin: "20px auto", // Centered with some margin
+        transition: "transform 0.3s ease-in-out",
+        animation: "glowBorder 3s infinite", // Glowing border animation
       }}
+      onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
+      onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
     >
       <Handle type="source" position={Position.Right} />
       <Handle type="source" position={Position.Top} />
@@ -221,25 +225,6 @@ const DestinationConnectionNode: React.FC<
         <option value={2}>DB2</option>
       </select>
 
-      <label>Location:</label>
-      <select
-        value={location}
-        onChange={(e) => setLocation(e.target.value)}
-        style={{
-          width: "100%",
-          padding: "8px",
-          margin: "8px 0",
-          border: "1px solid rgba(196, 110, 255, 0.5)",
-          borderRadius: "8px",
-          background: "rgba(224, 183, 255, 0.2)",
-          color: "#fff",
-        }}
-      >
-        <option value="Source">Source</option>
-        <option value="Destination">Destination</option>
-      </select>
-
-      {/* Buttons on the same row */}
       <div
         style={{
           display: "flex",
@@ -335,6 +320,7 @@ const DestinationConnectionNode: React.FC<
             padding: "20px",
             borderRadius: "10px",
             boxShadow: "0 4px 10px rgba(0, 0, 0, 0.3)",
+            animation: "fadeIn 0.8s ease-in-out", // Animation for the modal
           }}
         >
           <div className="modal-content">
@@ -363,6 +349,34 @@ const DestinationConnectionNode: React.FC<
           </div>
         </div>
       )}
+      <style>
+        {`
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes glowBorder {
+        0% {
+          border-color: rgba(196, 110, 255, 0.5);
+          box-shadow: 0 0 5px rgba(196, 110, 255, 0.5);
+        }
+        50% {
+          border-color: rgba(196, 110, 255, 1);
+          box-shadow: 0 0 15px rgba(196, 110, 255, 1);
+        }
+        100% {
+          border-color: rgba(196, 110, 255, 0.5);
+        }
+      }
+    `}
+      </style>
     </div>
   );
 };

@@ -1,3 +1,4 @@
+import { label } from "framer-motion/client";
 import { z } from "zod";
 
 export const connectionString = z.object({
@@ -42,3 +43,13 @@ export const ApiCall = z.object({
 });
 
 export type ApiCall = z.infer<typeof ApiCall>;
+
+export const scheduling = z.object({
+  source: z.number(),
+  destination: z.number(),
+  label: z.string(),
+  interval: z.number().optional(),
+  schedular: z.number().optional(),
+});
+
+export type Scheduling = z.infer<typeof scheduling>;

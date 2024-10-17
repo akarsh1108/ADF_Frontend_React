@@ -75,6 +75,7 @@ const CustomFlow: React.FC = () => {
           edges,
           getNode,
           (nextNodeId, newInputData) => {
+            console.log("Running next node:", nextNodeId, newInputData);
             setNodes((nds) =>
               nds.map((node) =>
                 node.id === nextNodeId
@@ -151,7 +152,7 @@ const CustomFlow: React.FC = () => {
   }));
 
   return (
-    <div style={{ height: "100vh", backgroundColor: "#000000" }}>
+    <div style={{ height: "65vh", backgroundColor: "#000000" }}>
       <ReactFlow
         nodes={nodesWithRunHandler}
         edges={edges}

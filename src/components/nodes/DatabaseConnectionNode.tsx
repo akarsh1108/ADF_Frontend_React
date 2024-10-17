@@ -30,6 +30,7 @@ const DatabaseConnectionNode: React.FC<NodeProps<DatabaseConnectionData>> = ({
   }, [selectedDatabase, databaseId, location, data]);
 
   const handleRunNode = () => {
+    console.log("Running node...", data);
     const inputData = {
       database: selectedDatabase,
       databaseId: databaseId,
@@ -42,41 +43,111 @@ const DatabaseConnectionNode: React.FC<NodeProps<DatabaseConnectionData>> = ({
   return (
     <div
       style={{
-        border: "1px solid #ddd",
-        padding: "10px",
+        border: "1px solid rgba(196, 110, 255, 0.5)",
+        background: "rgba(0, 0, 50, 0.3)",
+        backdropFilter: "blur(10px)",
+        boxShadow: "0 4px 10px rgba(224, 183, 255, 0.2)",
+        borderRadius: "15px",
+        padding: "15px",
+        width: "300px",
         position: "relative",
+        color: "#fff",
+        fontFamily: "Arial, sans-serif",
+        margin: "20px auto",
+        transition: "transform 0.3s ease-in-out",
+        animation: "glowBorder 3s infinite",
       }}
+      onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
+      onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
     >
       <Handle type="source" position={Position.Right} />
       <Handle type="source" position={Position.Top} />
       <Handle type="target" position={Position.Left} />
       <Handle type="target" position={Position.Bottom} />
-      <h4>Connection Activity</h4>
-      <label>Integration Database: </label>
+
+      <h4
+        style={{
+          fontSize: "16px",
+          fontWeight: "bold",
+          marginBottom: "15px",
+          textAlign: "center",
+        }}
+      >
+        Connection Activity
+      </h4>
+
+      <label
+        style={{ display: "block", marginBottom: "8px", fontSize: "14px" }}
+      >
+        Integration Database:
+      </label>
       <select
         value={selectedDatabase}
         onChange={(e) => setSelectedDatabase(e.target.value)}
+        style={{
+          width: "100%",
+          padding: "8px",
+          margin: "8px 0",
+          border: "1px solid rgba(196, 110, 255, 0.5)",
+          borderRadius: "8px",
+          background: "rgba(224, 183, 255, 0.2)",
+          color: "#fff",
+        }}
       >
         <option value="SSMS">SSMS</option>
       </select>
       <br />
-      <label>Connection Url: </label>
+
+      <label
+        style={{ display: "block", marginBottom: "8px", fontSize: "14px" }}
+      >
+        Connection URL:
+      </label>
       <select
         value={databaseId}
         onChange={(e) => setDatabaseId(Number(e.target.value))}
+        style={{
+          width: "100%",
+          padding: "8px",
+          margin: "8px 0",
+          border: "1px solid rgba(196, 110, 255, 0.5)",
+          borderRadius: "8px",
+          background: "rgba(224, 183, 255, 0.2)",
+          color: "#fff",
+        }}
       >
         <option value={1}>DB1</option>
         <option value={2}>DB2</option>
       </select>
       <br />
-      <label>Location : </label>
-      <select value={location} onChange={(e) => setLocation(e.target.value)}>
-        <option value="Source">Source</option>
-        <option value="Destination">Destination</option>
-      </select>
-      <br />
 
-      <button onClick={handleRunNode}>Run Activity</button>
+      <button
+        onClick={handleRunNode}
+        style={{
+          padding: "10px",
+          backgroundColor: "rgba(0, 150, 255, 0.6)",
+          border: "none",
+          borderRadius: "8px",
+          color: "#fff",
+          fontWeight: "bold",
+          cursor: "pointer",
+          width: "100%",
+          marginTop: "10px",
+          transition: "background 0.3s",
+        }}
+        onMouseOver={(e) =>
+          ((e.target as HTMLButtonElement).style.backgroundColor =
+            "rgba(0, 150, 255, 0.8)")
+        }
+        onMouseOut={(e) =>
+          ((e.target as HTMLButtonElement).style.backgroundColor =
+            "rgba(0, 150, 255, 0.6)")
+        }
+      >
+        Run Activity
+      </button>
+
+      {/* Status Icons */}
       {data.status === "success" && (
         <FiCheckCircle
           style={{ color: "green", position: "absolute", top: 5, right: 5 }}
@@ -87,6 +158,35 @@ const DatabaseConnectionNode: React.FC<NodeProps<DatabaseConnectionData>> = ({
           style={{ color: "red", position: "absolute", top: 5, right: 5 }}
         />
       )}
+      <style>
+        {`
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+  
+      @keyframes glowBorder {
+        0% {
+          border-color: rgba(196, 110, 255, 0.5);
+          box-shadow: 0 0 5px rgba(196, 110, 255, 0.5);
+        }
+        50% {
+          border-color: rgba(196, 110, 255, 1);
+          box-shadow: 0 0 15px rgba(196, 110, 255, 1);
+        }
+        100% {
+          border-color: rgba(196, 110, 255, 0.5);
+          box-shadow: 0 0 5px rgba(196, 110, 255, 0.5);
+        }
+      }
+    `}
+      </style>
     </div>
   );
 };

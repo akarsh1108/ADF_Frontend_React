@@ -89,19 +89,44 @@ const APICallNode: React.FC<NodeProps<APICallData>> = ({ data }) => {
   return (
     <div
       style={{
-        border: "1px solid #ddd",
-        padding: "10px",
+        width: "300px",
+        border: "1px solid rgba(196, 110, 255, 0.5)", // Border style with animation
+        background: "rgba(0, 0, 50, 0.3)", // Soft blue background for glass effect
+        backdropFilter: "blur(10px)",
+        boxShadow: "0 4px 10px rgba(224, 183, 255, 0.2)", // Enhanced shadow effect
+        borderRadius: "15px",
+        padding: "15px",
         position: "relative",
+        color: "#fff",
+        fontFamily: "Arial, sans-serif",
+        margin: "20px auto", // Centered with some margin
+        animation: "glowBorder 3s infinite, fadeIn 1s ease-in-out", // Combined animations
+        transition: "transform 0.3s ease-in-out",
       }}
+      onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
+      onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
     >
       <Handle type="source" position={Position.Right} />
       <Handle type="source" position={Position.Top} />
       <Handle type="target" position={Position.Left} />
       <Handle type="target" position={Position.Bottom} />
 
-      <h4>API Call Actvity</h4>
+      <h4
+        style={{
+          fontSize: "16px",
+          fontWeight: "bold",
+          marginBottom: "15px",
+          textAlign: "center",
+        }}
+      >
+        API Call Activity
+      </h4>
 
-      <label>Title: </label>
+      <label
+        style={{ display: "block", marginBottom: "8px", fontSize: "14px" }}
+      >
+        Title:
+      </label>
       <input
         type="text"
         value={text}
@@ -109,11 +134,24 @@ const APICallNode: React.FC<NodeProps<APICallData>> = ({ data }) => {
           setText(e.target.value);
           data.onUpdate && data.onUpdate({ ...data, text: e.target.value });
         }}
-        placeholder="Enter API URL"
+        placeholder="Enter API Title"
+        style={{
+          width: "100%",
+          padding: "8px",
+          margin: "8px 0",
+          border: "1px solid rgba(196, 110, 255, 0.5)",
+          borderRadius: "8px",
+          background: "rgba(224, 183, 255, 0.2)",
+          color: "#fff",
+        }}
       />
       <br />
 
-      <label>API URL: </label>
+      <label
+        style={{ display: "block", marginBottom: "8px", fontSize: "14px" }}
+      >
+        API URL:
+      </label>
       <input
         type="text"
         value={apiUrl}
@@ -122,15 +160,37 @@ const APICallNode: React.FC<NodeProps<APICallData>> = ({ data }) => {
           data.onUpdate && data.onUpdate({ ...data, apiUrl: e.target.value });
         }}
         placeholder="Enter API URL"
+        style={{
+          width: "100%",
+          padding: "8px",
+          margin: "8px 0",
+          border: "1px solid rgba(196, 110, 255, 0.5)",
+          borderRadius: "8px",
+          background: "rgba(224, 183, 255, 0.2)",
+          color: "#fff",
+        }}
       />
       <br />
 
-      <label>Method: </label>
+      <label
+        style={{ display: "block", marginBottom: "8px", fontSize: "14px" }}
+      >
+        Method:
+      </label>
       <select
         value={method}
         onChange={(e) => {
           setMethod(e.target.value);
           data.onUpdate && data.onUpdate({ ...data, method: e.target.value });
+        }}
+        style={{
+          width: "100%",
+          padding: "8px",
+          margin: "8px 0",
+          border: "1px solid rgba(196, 110, 255, 0.5)",
+          borderRadius: "8px",
+          background: "rgba(224, 183, 255, 0.2)",
+          color: "#fff",
         }}
       >
         <option value="GET">GET</option>
@@ -140,9 +200,16 @@ const APICallNode: React.FC<NodeProps<APICallData>> = ({ data }) => {
       </select>
       <br />
 
-      <label>Headers:</label>
+      <label
+        style={{ display: "block", marginBottom: "8px", fontSize: "14px" }}
+      >
+        Headers:
+      </label>
       {headers.map((header, index) => (
-        <div key={index}>
+        <div
+          key={index}
+          style={{ display: "flex", gap: "8px", marginBottom: "8px" }}
+        >
           <input
             type="text"
             value={header.key}
@@ -150,6 +217,14 @@ const APICallNode: React.FC<NodeProps<APICallData>> = ({ data }) => {
               handleHeaderChange(index, e.target.value, header.value)
             }
             placeholder="Key"
+            style={{
+              width: "50%",
+              padding: "8px",
+              border: "1px solid rgba(196, 110, 255, 0.5)",
+              borderRadius: "8px",
+              background: "rgba(224, 183, 255, 0.2)",
+              color: "#fff",
+            }}
           />
           <input
             type="text"
@@ -158,16 +233,58 @@ const APICallNode: React.FC<NodeProps<APICallData>> = ({ data }) => {
               handleHeaderChange(index, header.key, e.target.value)
             }
             placeholder="Value"
+            style={{
+              width: "50%",
+              padding: "8px",
+              border: "1px solid rgba(196, 110, 255, 0.5)",
+              borderRadius: "8px",
+              background: "rgba(224, 183, 255, 0.2)",
+              color: "#fff",
+            }}
           />
         </div>
       ))}
-      <button onClick={handleAddHeader}>Add Header</button>
-      <button onClick={removeLastHeader}>Remove Header</button>
+      <button
+        onClick={handleAddHeader}
+        style={{
+          padding: "8px",
+          backgroundColor: "rgba(0, 200, 150, 0.6)",
+          border: "none",
+          borderRadius: "8px",
+          color: "#fff",
+          fontWeight: "bold",
+          cursor: "pointer",
+        }}
+      >
+        Add Header
+      </button>
+      <button
+        onClick={removeLastHeader}
+        style={{
+          padding: "8px",
+          backgroundColor: "rgba(255, 100, 100, 0.6)",
+          border: "none",
+          borderRadius: "8px",
+          color: "#fff",
+          fontWeight: "bold",
+          cursor: "pointer",
+          marginLeft: "8px",
+        }}
+      >
+        Remove Header
+      </button>
       <br />
 
-      <label>Data:</label>
+      <label
+        style={{ display: "block", marginBottom: "8px", fontSize: "14px" }}
+      >
+        Data:
+      </label>
       {fields.map((field, index) => (
-        <div key={index}>
+        <div
+          key={index}
+          style={{ display: "flex", gap: "8px", marginBottom: "8px" }}
+        >
           <input
             type="text"
             value={field.key}
@@ -175,6 +292,14 @@ const APICallNode: React.FC<NodeProps<APICallData>> = ({ data }) => {
               handleFieldChange(index, e.target.value, field.value)
             }
             placeholder="Key"
+            style={{
+              width: "50%",
+              padding: "8px",
+              border: "1px solid rgba(196, 110, 255, 0.5)",
+              borderRadius: "8px",
+              background: "rgba(224, 183, 255, 0.2)",
+              color: "#fff",
+            }}
           />
           <input
             type="text"
@@ -183,14 +308,64 @@ const APICallNode: React.FC<NodeProps<APICallData>> = ({ data }) => {
               handleFieldChange(index, field.key, e.target.value)
             }
             placeholder="Value"
+            style={{
+              width: "50%",
+              padding: "8px",
+              border: "1px solid rgba(196, 110, 255, 0.5)",
+              borderRadius: "8px",
+              background: "rgba(224, 183, 255, 0.2)",
+              color: "#fff",
+            }}
           />
         </div>
       ))}
-      <button onClick={handleAddField}>Add Data Field</button>
-      <button onClick={removeLastDataField}>Remove Data Feild</button>
+      <button
+        onClick={handleAddField}
+        style={{
+          padding: "8px",
+          backgroundColor: "rgba(0, 200, 150, 0.6)",
+          border: "none",
+          borderRadius: "8px",
+          color: "#fff",
+          fontWeight: "bold",
+          cursor: "pointer",
+        }}
+      >
+        Add Data Field
+      </button>
+      <button
+        onClick={removeLastDataField}
+        style={{
+          padding: "8px",
+          backgroundColor: "rgba(255, 100, 100, 0.6)",
+          border: "none",
+          borderRadius: "8px",
+          color: "#fff",
+          fontWeight: "bold",
+          cursor: "pointer",
+          marginLeft: "8px",
+        }}
+      >
+        Remove Data Field
+      </button>
       <br />
 
-      <button onClick={handleRunNode}>Send API Request</button>
+      <button
+        onClick={handleRunNode}
+        style={{
+          padding: "10px",
+          backgroundColor: "rgba(0, 150, 255, 0.6)",
+          border: "none",
+          borderRadius: "8px",
+          color: "#fff",
+          fontWeight: "bold",
+          cursor: "pointer",
+          width: "100%",
+          marginTop: "10px",
+        }}
+      >
+        Send API Request
+      </button>
 
       {data.status === "success" && (
         <FiCheckCircle
@@ -202,6 +377,35 @@ const APICallNode: React.FC<NodeProps<APICallData>> = ({ data }) => {
           style={{ color: "red", position: "absolute", top: 5, right: 5 }}
         />
       )}
+      <style>
+        {`
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes glowBorder {
+        0% {
+          border-color: rgba(196, 110, 255, 0.5);
+          box-shadow: 0 0 5px rgba(196, 110, 255, 0.5);
+        }
+        50% {
+          border-color: rgba(196, 110, 255, 1);
+          box-shadow: 0 0 15px rgba(196, 110, 255, 1);
+        }
+        100% {
+          border-color: rgba(196, 110, 255, 0.5);
+          box-shadow: 0 0 5px rgba(196, 110, 255, 0.5);
+        }
+      }
+    `}
+      </style>
     </div>
   );
 };

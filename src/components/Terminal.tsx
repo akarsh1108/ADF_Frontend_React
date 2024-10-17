@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { pusherClient } from "../lib/pusher";
 import { termialLogs } from "../api/nodeApis";
 
@@ -6,15 +6,15 @@ const Terminal = () => {
   const [success, setSuccess] = useState<string[]>([]);
   const [logs, setLogs] = useState<string[]>([]);
   const [label, setLabel] = useState<string[]>([]);
+  const terminalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Subscribe to the channel and event
     const channel = pusherClient.subscribe("logs-channel");
     channel.bind(
       "log-event",
       async function (data: {
         status: string;
-        label?: string; // Make label optional
+        label?: string;
         message: string;
       }) {
         setLogs((prevLogs) => [...prevLogs, data.message]);
@@ -23,6 +23,7 @@ const Terminal = () => {
           ...prevLabel,
           data.label || "Connection Activity",
         ]);
+
         const req = {
           message: data.message,
           status: data.status,
@@ -33,49 +34,86 @@ const Terminal = () => {
       }
     );
 
-    // Cleanup on component unmount
     return () => {
       pusherClient.unsubscribe("logs-channel");
     };
   }, []);
 
-  // Function to generate a color based on the label
+  useEffect(() => {
+    if (terminalRef.current) {
+      terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
+    }
+  }, [logs]);
+
   const getColorForLabel = (label: string) => {
     let hash = 0;
     for (let i = 0; i < label.length; i++) {
       hash = label.charCodeAt(i) + ((hash << 5) - hash);
     }
-    const color = `black`;
-    return color;
+    return `hsl(${hash % 360}, 70%, 60%)`;
   };
 
   return (
-    <div className="h-1/4 bg-black text-white p-4 overflow-auto border-t">
-      <p className="text-sm">Terminal</p>
-      <div>
+    <div
+      className="terminal-container h-16 p-4 overflow-auto"
+      ref={terminalRef}
+    >
+      <p className="text-sm text-white mb-2">Terminal</p>
+      <div className="log-entries">
         {logs.map((log, index) => (
-          <div key={index} className="flex items-center text-xs mb-1">
+          <div key={index} className="log-entry flex items-center text-xs mb-1">
             <span
-              className={`inline-block w-2 h-2 rounded-full mr-2 ${
+              className={`status-indicator mr-2 ${
                 success[index] === "success" ? "bg-green-500" : "bg-red-500"
               }`}
-            ></span>
+            />
+            <span className="log-time mr-2">{new Date().toLocaleString()}</span>
             <span
-              className={`inline-block w-2 h-2 rounded-full mr-2 ${
-                success[index] === "success" ? "bg-green-500" : "bg-red-500"
-              }`}
-            ></span>
-            <span className="mr-2">{new Date().toLocaleString()}</span>
-            <span
-              className="mr-2"
+              className="log-label mr-2"
               style={{ color: getColorForLabel(label[index]) }}
             >
-              ` {label[index]} `
+              {label[index]}
             </span>
-            <span>{log}</span>
+            <span className="log-message">{log}</span>
           </div>
         ))}
       </div>
+      <style>{`
+        .terminal-container {
+          background: #000;
+          border: 1px solid rgba(196, 110, 255, 0.5);
+          box-shadow: 0 4px 15px rgba(224, 183, 255, 0.2);
+          color: white;
+          font-family: "Courier New", Courier, monospace;
+          transition: transform 0.3s ease-in-out;
+          height: 280px; /* Fixed height */
+          overflow-y: auto; /* Scrollable */
+        }
+
+        // .terminal-container:hover {
+        //   transform: scale(1.05);
+        // }
+
+        .log-entry {
+          display: flex;
+          align-items: center;
+          padding: 6px;
+          background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .status-indicator {
+          width: 10px;
+          height: 10px;
+        }
+
+        .log-label {
+          font-weight: bold;
+        }
+
+        .log-message {
+          flex: 1;
+        }
+      `}</style>
     </div>
   );
 };

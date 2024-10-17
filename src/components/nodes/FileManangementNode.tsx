@@ -110,6 +110,7 @@ const FileManagementNode: React.FC<NodeProps<FileManagementData>> = ({
   };
 
   const handleRunNode = () => {
+    console.log("Running File Management Node with: ", data);
     const inputData = {
       file: fileId,
       fileName,
@@ -120,25 +121,81 @@ const FileManagementNode: React.FC<NodeProps<FileManagementData>> = ({
     data.onRunNode && data.onRunNode(inputData);
   };
 
+  useEffect(() => {
+    const selectElement = document.querySelector(".custom-select");
+    if (selectElement) {
+      const options = selectElement.querySelectorAll("option");
+      options.forEach((option) => {
+        option.style.backgroundColor = "rgba(224, 183, 255, 0.2)";
+        option.style.color = "#fff";
+      });
+    }
+  }, [data.files]);
+
   return (
     <div
       style={{
-        border: "1px solid #ddd",
-        padding: "10px",
+        border: "1px solid rgba(196, 110, 255, 0.5)",
+        background: "rgba(0, 0, 50, 0.3)",
+        backdropFilter: "blur(10px)",
+        boxShadow: "0 4px 10px rgba(224, 183, 255, 0.2)",
+        borderRadius: "15px",
+        padding: "15px",
+        width: "300px",
         position: "relative",
+        color: "#fff",
+        fontFamily: "Arial, sans-serif",
+        margin: "20px auto", // Centered with some margin
+        transition: "transform 0.3s ease-in-out",
+        animation: "glowBorder 3s infinite", // Glowing border animation
       }}
+      onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
+      onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
     >
       <Handle type="source" position={Position.Right} />
       <Handle type="source" position={Position.Top} />
       <Handle type="target" position={Position.Left} />
       <Handle type="target" position={Position.Bottom} />
-      <h4>File Management Activity</h4>
 
-      <label>File: </label>
-      <select value={selectedFile} onChange={handleFileSelect}>
+      <h4
+        style={{
+          fontSize: "16px",
+          fontWeight: "bold",
+          marginBottom: "15px",
+          textAlign: "center",
+        }}
+      >
+        File Management Activity
+      </h4>
+
+      <label
+        style={{ display: "block", marginBottom: "8px", fontSize: "14px" }}
+      >
+        File:
+      </label>
+      <select
+        value={selectedFile}
+        onChange={handleFileSelect}
+        className="custom-select"
+        style={{
+          width: "100%",
+          padding: "8px",
+          margin: "8px 0",
+          border: "1px solid rgba(196, 110, 255, 0.5)",
+          borderRadius: "8px",
+          background: "rgba(224, 183, 255, 0.2)",
+          color: "#fff",
+        }}
+      >
         {data.files && data.files.length > 0 ? (
           data.files.map((file: Files) => (
-            <option key={file.id} value={file.id}>
+            <option
+              key={file.id}
+              value={file.id}
+              style={{
+                color: "#fff",
+              }}
+            >
               {file.filename}
             </option>
           ))
@@ -148,18 +205,44 @@ const FileManagementNode: React.FC<NodeProps<FileManagementData>> = ({
       </select>
       <br />
 
-      <label>File New Name: </label>
+      <label
+        style={{ display: "block", marginBottom: "8px", fontSize: "14px" }}
+      >
+        File New Name:
+      </label>
       <input
         type="text"
         value={fileName.split(".")[0]}
         onChange={(e) => setFileName(e.target.value)}
+        style={{
+          width: "100%",
+          padding: "8px",
+          margin: "8px 0",
+          border: "1px solid rgba(196, 110, 255, 0.5)",
+          borderRadius: "8px",
+          background: "rgba(224, 183, 255, 0.2)",
+          color: "#fff",
+        }}
       />
       <br />
 
-      <label>File Format: </label>
+      <label
+        style={{ display: "block", marginBottom: "8px", fontSize: "14px" }}
+      >
+        File Format:
+      </label>
       <select
         value={fileFormat}
         onChange={(e) => setFileFormat(e.target.value)}
+        style={{
+          width: "100%",
+          padding: "8px",
+          margin: "8px 0",
+          border: "1px solid rgba(196, 110, 255, 0.5)",
+          borderRadius: "8px",
+          background: "rgba(224, 183, 255, 0.2)",
+          color: "#fff",
+        }}
       >
         <option value="json">JSON</option>
         <option value="xml">XML</option>
@@ -168,16 +251,86 @@ const FileManagementNode: React.FC<NodeProps<FileManagementData>> = ({
       </select>
       <br />
 
-      <button onClick={handleRunNode}>Run Activity</button>
+      <button
+        onClick={handleRunNode}
+        style={{
+          padding: "10px",
+          backgroundColor: "rgba(0, 150, 255, 0.6)", // Blue background for Run button
+          border: "none",
+          borderRadius: "8px",
+          color: "#fff",
+          fontWeight: "bold",
+          cursor: "pointer",
+          width: "100%",
+          marginTop: "10px",
+          transition: "background 0.3s",
+        }}
+        onMouseOver={(e) =>
+          ((e.target as HTMLElement).style.backgroundColor =
+            "rgba(0, 150, 255, 0.8)")
+        }
+        onMouseOut={(e) =>
+          ((e.target as HTMLElement).style.backgroundColor =
+            "rgba(0, 150, 255, 0.6)")
+        }
+      >
+        Run Activity
+      </button>
 
       {fileContentUrl && (
-        <>
-          <button onClick={handlePreview}>Preview File</button>
-          <button onClick={handleDownload}>Download File</button>
-        </>
+        <div style={{ marginTop: "10px" }}>
+          <button
+            onClick={handlePreview}
+            style={{
+              padding: "10px",
+              backgroundColor: "rgba(0, 200, 150, 0.6)", // Teal background for Preview button
+              border: "none",
+              borderRadius: "8px",
+              color: "#fff",
+              fontWeight: "bold",
+              cursor: "pointer",
+              marginRight: "10px",
+              transition: "background 0.3s",
+            }}
+            onMouseOver={(e) =>
+              ((e.target as HTMLElement).style.backgroundColor =
+                "rgba(0, 200, 150, 0.8)")
+            }
+            onMouseOut={(e) =>
+              ((e.target as HTMLElement).style.backgroundColor =
+                "rgba(0, 200, 150, 0.6)")
+            }
+          >
+            Preview File
+          </button>
+
+          <button
+            onClick={handleDownload}
+            style={{
+              padding: "10px",
+              backgroundColor: "rgba(0, 200, 150, 0.6)", // Teal background for Download button
+              border: "none",
+              borderRadius: "8px",
+              color: "#fff",
+              fontWeight: "bold",
+              cursor: "pointer",
+              transition: "background 0.3s",
+            }}
+            onMouseOver={(e) =>
+              ((e.target as HTMLElement).style.backgroundColor =
+                "rgba(0, 200, 150, 0.8)")
+            }
+            onMouseOut={(e) =>
+              ((e.target as HTMLElement).style.backgroundColor =
+                "rgba(0, 200, 150, 0.6)")
+            }
+          >
+            Download File
+          </button>
+        </div>
       )}
 
-      {data.status === "success" && data.files && (
+      {data.status === "success" && (
         <FiCheckCircle
           style={{ color: "green", position: "absolute", top: 5, right: 5 }}
         />
@@ -193,16 +346,68 @@ const FileManagementNode: React.FC<NodeProps<FileManagementData>> = ({
       {isDialogOpen && fileContentUrl && (
         <div className="modal">
           <div className="modal-content">
-            <h4>Preview: {fileName}</h4>
             <iframe
               src={fileContentUrl}
-              style={{ width: "100%", height: "500px" }}
+              style={{ width: "100%", height: "500px", color: "#fff" }}
               title="file-preview"
             />
-            <button onClick={() => setIsDialogOpen(false)}>Close</button>
+            <button
+              onClick={() => setIsDialogOpen(false)}
+              style={{
+                padding: "10px",
+                backgroundColor: "rgba(255, 100, 100, 0.6)", // Red background for Close button
+                border: "none",
+                borderRadius: "8px",
+                color: "#fff",
+                fontWeight: "bold",
+                cursor: "pointer",
+                marginTop: "10px",
+                width: "100%",
+                transition: "background 0.3s",
+              }}
+              onMouseOver={(e) =>
+                ((e.target as HTMLElement).style.backgroundColor =
+                  "rgba(255, 100, 100, 0.8)")
+              }
+              onMouseOut={(e) =>
+                ((e.target as HTMLElement).style.backgroundColor =
+                  "rgba(255, 100, 100, 0.6)")
+              }
+            >
+              Close
+            </button>
           </div>
         </div>
       )}
+      <style>
+        {`
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+  
+      @keyframes glowBorder {
+        0% {
+          border-color: rgba(196, 110, 255, 0.5);
+          box-shadow: 0 0 5px rgba(196, 110, 255, 0.5);
+        }
+        50% {
+          border-color: rgba(196, 110, 255, 1);
+          box-shadow: 0 0 15px rgba(196, 110, 255, 1);
+        }
+        100% {
+          border-color: rgba(196, 110, 255, 0.5);
+          box-shadow: 0 0 5px rgba(196, 110, 255, 0.5);
+        }
+      }
+    `}
+      </style>
     </div>
   );
 };

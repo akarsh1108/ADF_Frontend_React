@@ -4,6 +4,7 @@ import {
   ConnectionString,
   DestinationConnection,
   FileManagement,
+  Scheduling,
 } from "../schemas/connection";
 
 const API_URL = "http://127.0.0.1:8000";
@@ -47,6 +48,8 @@ export const fetchDestinationConnectionApi = async (
           base64 = btoa(unescape(encodeURIComponent(base)));
         } else if (fileType === "application/xml" || fileType === "text/xml") {
           base64 = btoa(unescape(encodeURIComponent(base)));
+          base64 = btoa(unescape(encodeURIComponent(base)));
+        } else if (fileType === "text/csv") {
           base64 = btoa(unescape(encodeURIComponent(base)));
         }
         // Check if the string contains a base64 prefix (e.g., "data:<filetype>;base64,") and remove it
@@ -165,5 +168,14 @@ export const uploadFiles = async (id: number, file: File) => {
     return response.data;
   } catch (error) {
     console.error("Error uploading file:", error);
+  }
+};
+
+export const schedulingActivity = async (req: Scheduling) => {
+  try {
+    const response = await axios.post(`${API_URL}/scheduling/`, req);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching terminal logs:", error);
   }
 };
