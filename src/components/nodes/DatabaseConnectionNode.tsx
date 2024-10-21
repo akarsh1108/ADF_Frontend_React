@@ -84,6 +84,7 @@ const DatabaseConnectionNode: React.FC<NodeProps<DatabaseConnectionData>> = ({
       <select
         value={selectedDatabase}
         onChange={(e) => setSelectedDatabase(e.target.value)}
+        className="custom-dropdown" // Add custom class
         style={{
           width: "100%",
           padding: "8px",
@@ -93,9 +94,39 @@ const DatabaseConnectionNode: React.FC<NodeProps<DatabaseConnectionData>> = ({
           background: "rgba(224, 183, 255, 0.2)",
           color: "#fff",
         }}
+        onMouseOver={(e) =>
+          ((e.target as HTMLSelectElement).style.borderColor =
+            "rgba(196, 110, 255, 1)")
+        }
+        onMouseOut={(e) =>
+          ((e.target as HTMLSelectElement).style.borderColor =
+            "rgba(196, 110, 255, 0.5)")
+        }
       >
         <option value="SSMS">SSMS</option>
+        <option value="SSMS2">SSMS2</option>
+        <option value="SSMS3">SSMS3</option>
       </select>
+
+      <style>
+        {
+          /* Custom dropdown styles */
+          `.custom-dropdown {
+  appearance: none; /* Hide default arrow */
+  background-color: black; /* Dropdown background */
+  border-color: rgba(196, 110, 255, 1); /* Purple border */
+  color: white; /* Font color */
+}
+
+
+.custom-dropdown option {
+  background-color: black;
+  color: white;
+  border: 1px solid rgba(196, 110, 255, 1);
+}`
+        }
+      </style>
+
       <br />
 
       <label

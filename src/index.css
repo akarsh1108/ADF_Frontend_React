@@ -11,3 +11,26 @@
   --background-color: #121212;
   --text-color: #ffffff;
 }
+
+/* Global dropdown styles */
+select {
+  appearance: none; /* Hide default arrow */
+  background-color: rgb(41, 34, 41); /* Dropdown background */
+  border: 1px solid rgba(196, 110, 255, 1); /* Purple border */
+  color: white; /* Font color */
+  border-radius: 8px;
+  padding: 8px;
+  width: 100%;
+  margin: 8px 0;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+/* Style the dropdown options */
+select option {
+  background-color: rgb(59, 40, 75);
+  color: white;
+  border: 1px solid rgba(196, 110, 255, 1);
+  padding: 8px;
+  width: 100%;
+  margin: 8px 0;
+}

@@ -1,0 +1,19 @@
+/* Global dropdown styles */
+select {
+  appearance: none; /* Hide default arrow */
+  background-color: black; /* Dropdown background */
+  border: 1px solid rgba(196, 110, 255, 1); /* Purple border */
+  color: white; /* Font color */
+  border-radius: 8px;
+  padding: 8px;
+  width: 100%;
+  margin: 8px 0;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+/* Style the dropdown options */
+select option {
+  background-color: black;
+  color: white;
+  border: 1px solid rgba(196, 110, 255, 1);
+}

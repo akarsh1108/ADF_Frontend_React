@@ -287,6 +287,7 @@ const FileManagementNode: React.FC<NodeProps<FileManagementData>> = ({
               border: "none",
               borderRadius: "8px",
               color: "#fff",
+              textDecorationColor: "#000",
               fontWeight: "bold",
               cursor: "pointer",
               marginRight: "10px",
@@ -345,10 +346,16 @@ const FileManagementNode: React.FC<NodeProps<FileManagementData>> = ({
       {/* File Preview Dialog */}
       {isDialogOpen && fileContentUrl && (
         <div className="modal">
-          <div className="modal-content">
+          <div className="modal-content m-2">
             <iframe
               src={fileContentUrl}
-              style={{ width: "100%", height: "500px", color: "#fff" }}
+              style={{
+                width: "100%",
+                height: "500px",
+                border: "2px solid #ccc",
+                backgroundColor: "#800080",
+                borderRadius: "8px",
+              }}
               title="file-preview"
             />
             <button
