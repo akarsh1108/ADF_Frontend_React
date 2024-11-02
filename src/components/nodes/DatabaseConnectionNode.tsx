@@ -5,6 +5,7 @@ import { FiCheckCircle, FiXCircle } from "react-icons/fi";
 type DatabaseConnectionData = {
   selectedDatabase: string;
   databaseId: number;
+  url: string;
   location: string;
   status: "idle" | "success" | "error";
   onRunNode?: (inputData: any) => void;
@@ -19,39 +20,37 @@ const DatabaseConnectionNode: React.FC<NodeProps<DatabaseConnectionData>> = ({
   );
   const [databaseId, setDatabaseId] = useState(data.databaseId || 1);
   const [location, setLocation] = useState(data.location || "Source");
+  const [connectionType, setConnectionType] = useState("Dropdown"); // New state for connection type
+  const [urlInput, setUrlInput] = useState(""); // State to store text input when URL is selected
 
   useEffect(() => {
     data.onUpdate &&
-      data.onUpdate({
-        selectedDatabase,
-        databaseId,
-        location,
-      });
-  }, [selectedDatabase, databaseId, location, data]);
+      data.onUpdate({ selectedDatabase, databaseId, location, url: urlInput });
+  }, [selectedDatabase, databaseId, location, urlInput, data]);
 
   const handleRunNode = () => {
-    console.log("Running node...", data);
     const inputData = {
       database: selectedDatabase,
-      databaseId: databaseId,
-      location: location,
+      databaseId: connectionType === "Dropdown" ? databaseId : 0,
+      connectionType,
+      url: urlInput,
+      location,
     };
-    console.log("inputData", inputData);
-    data.onRunNode && data.onRunNode(inputData); // Execute the run node action with inputData
+    data.onRunNode && data.onRunNode(inputData);
   };
 
   return (
     <div
       style={{
-        border: "1px solid rgba(196, 110, 255, 0.5)",
-        background: "rgba(0, 0, 50, 0.3)",
+        border: "0.5px solid rgba(255, 152, 0, 1)",
+        background: "rgba(255, 152, 0, 0.1)",
         backdropFilter: "blur(10px)",
-        boxShadow: "0 4px 10px rgba(224, 183, 255, 0.2)",
+        boxShadow: "0 2px 6px rgba(255, 152, 0, 0.)",
         borderRadius: "15px",
         padding: "15px",
         width: "300px",
         position: "relative",
-        color: "#fff",
+        color: "white",
         fontFamily: "Arial, sans-serif",
         margin: "20px auto",
         transition: "transform 0.3s ease-in-out",
@@ -84,23 +83,23 @@ const DatabaseConnectionNode: React.FC<NodeProps<DatabaseConnectionData>> = ({
       <select
         value={selectedDatabase}
         onChange={(e) => setSelectedDatabase(e.target.value)}
-        className="custom-dropdown" // Add custom class
+        className="custom-dropdown"
         style={{
           width: "100%",
           padding: "8px",
           margin: "8px 0",
-          border: "1px solid rgba(196, 110, 255, 0.5)",
+          border: "1px solid rgba(255, 152, 0, 1)",
           borderRadius: "8px",
-          background: "rgba(224, 183, 255, 0.2)",
+          background: "rgba(255, 152, 0, 0.2)",
           color: "#fff",
         }}
         onMouseOver={(e) =>
           ((e.target as HTMLSelectElement).style.borderColor =
-            "rgba(196, 110, 255, 1)")
+            "rgba(255, 152, 0, 0.6)")
         }
         onMouseOut={(e) =>
           ((e.target as HTMLSelectElement).style.borderColor =
-            "rgba(196, 110, 255, 0.5)")
+            "rgba(255, 152, 0, 0.8)")
         }
       >
         <option value="SSMS">SSMS</option>
@@ -108,55 +107,84 @@ const DatabaseConnectionNode: React.FC<NodeProps<DatabaseConnectionData>> = ({
         <option value="SSMS3">SSMS3</option>
       </select>
 
-      <style>
-        {
-          /* Custom dropdown styles */
-          `.custom-dropdown {
-  appearance: none; /* Hide default arrow */
-  background-color: black; /* Dropdown background */
-  border-color: rgba(196, 110, 255, 1); /* Purple border */
-  color: white; /* Font color */
-}
-
-
-.custom-dropdown option {
-  background-color: black;
-  color: white;
-  border: 1px solid rgba(196, 110, 255, 1);
-}`
-        }
-      </style>
-
-      <br />
-
       <label
         style={{ display: "block", marginBottom: "8px", fontSize: "14px" }}
       >
-        Connection URL:
+        Connection Type:
       </label>
       <select
-        value={databaseId}
-        onChange={(e) => setDatabaseId(Number(e.target.value))}
+        value={connectionType}
+        onChange={(e) => setConnectionType(e.target.value)}
         style={{
           width: "100%",
           padding: "8px",
           margin: "8px 0",
-          border: "1px solid rgba(196, 110, 255, 0.5)",
+          border: "1px solid rgba(255, 152, 0, 1)",
           borderRadius: "8px",
-          background: "rgba(224, 183, 255, 0.2)",
+          background: "rgba(255, 152, 0, 0.2)",
           color: "#fff",
         }}
       >
-        <option value={1}>DB1</option>
-        <option value={2}>DB2</option>
+        <option value="Dropdown">Dropdown</option>
+        <option value="URL">URL</option>
       </select>
-      <br />
+
+      {connectionType === "Dropdown" ? (
+        <>
+          <label
+            style={{ display: "block", marginBottom: "8px", fontSize: "14px" }}
+          >
+            Connection URL:
+          </label>
+          <select
+            value={databaseId}
+            onChange={(e) => {
+              setDatabaseId(Number(e.target.value));
+              setUrlInput("");
+            }}
+            style={{
+              width: "100%",
+              padding: "8px",
+              margin: "8px 0",
+              border: "1px solid rgba(255, 152, 0, 1)",
+              borderRadius: "8px",
+              background: "rgba(255, 152, 0, 0.2)",
+              color: "#fff",
+            }}
+          >
+            <option value={1}>DB1</option>
+            <option value={2}>DB2</option>
+          </select>
+        </>
+      ) : (
+        <>
+          <label
+            style={{ display: "block", marginBottom: "8px", fontSize: "14px" }}
+          >
+            Enter URL:
+          </label>
+          <input
+            type="text"
+            value={urlInput}
+            onChange={(e) => setUrlInput(e.target.value)}
+            style={{
+              width: "100%",
+              padding: "8px",
+              margin: "8px 0",
+              border: "1px solid rgba(255, 152, 0, 1)",
+              borderRadius: "8px",
+              background: "rgba(255, 152, 0, 0.2)",
+              color: "#fff",
+            }}
+          />
+        </>
+      )}
 
       <button
         onClick={handleRunNode}
         style={{
           padding: "10px",
-          backgroundColor: "rgba(0, 150, 255, 0.6)",
+          backgroundColor: "rgba(255, 152, 0, 1)",
           border: "none",
           borderRadius: "8px",
           color: "#fff",
@@ -168,17 +196,16 @@ const DatabaseConnectionNode: React.FC<NodeProps<DatabaseConnectionData>> = ({
         }}
         onMouseOver={(e) =>
           ((e.target as HTMLButtonElement).style.backgroundColor =
-            "rgba(0, 150, 255, 0.8)")
+            "rgba(255, 152, 0, 0.6)")
         }
         onMouseOut={(e) =>
           ((e.target as HTMLButtonElement).style.backgroundColor =
-            "rgba(0, 150, 255, 0.6)")
+            "rgba(255, 152, 0, 0.8)")
         }
       >
         Run Activity
       </button>
 
-      {/* Status Icons */}
       {data.status === "success" && (
         <FiCheckCircle
           style={{ color: "green", position: "absolute", top: 5, right: 5 }}
@@ -189,35 +216,6 @@ const DatabaseConnectionNode: React.FC<NodeProps<DatabaseConnectionData>> = ({
           style={{ color: "red", position: "absolute", top: 5, right: 5 }}
         />
       )}
-      <style>
-        {`
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(-20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-  
-      @keyframes glowBorder {
-        0% {
-          border-color: rgba(196, 110, 255, 0.5);
-          box-shadow: 0 0 5px rgba(196, 110, 255, 0.5);
-        }
-        50% {
-          border-color: rgba(196, 110, 255, 1);
-          box-shadow: 0 0 15px rgba(196, 110, 255, 1);
-        }
-        100% {
-          border-color: rgba(196, 110, 255, 0.5);
-          box-shadow: 0 0 5px rgba(196, 110, 255, 0.5);
-        }
-      }
-    `}
-      </style>
     </div>
   );
 };

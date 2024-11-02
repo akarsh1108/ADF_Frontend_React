@@ -95,7 +95,7 @@ const FolderUploadNode: React.FC<NodeProps<FolderUploadData>> = ({ data }) => {
   return (
     <div
       style={{
-        border: "1px solid rgba(196, 110, 255, 0.5)",
+        border: "1px solid rgba(0, 0, 0, 0)",
         background: "rgba(0, 0, 50, 0.3)", // Glass effect background
         backdropFilter: "blur(10px)",
         boxShadow: "0 4px 10px rgba(224, 183, 255, 0.2)", // Enhanced shadow
@@ -107,7 +107,7 @@ const FolderUploadNode: React.FC<NodeProps<FolderUploadData>> = ({ data }) => {
         fontFamily: "Arial, sans-serif",
         margin: "20px auto",
         transition: "transform 0.3s ease-in-out",
-        animation: "glowBorder 3s infinite, fadeIn 1s ease-in-out", // Combined animations
+        animation: "Border 3s infinite, fadeIn 1s ease-in-out", // Combined animations
       }}
       onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
       onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
@@ -142,7 +142,7 @@ const FolderUploadNode: React.FC<NodeProps<FolderUploadData>> = ({ data }) => {
           width: "100%",
           padding: "8px",
           margin: "8px 0",
-          border: "1px solid rgba(196, 110, 255, 0.5)",
+          border: "1px solid rgba(0, 0, 0, 0)",
           borderRadius: "8px",
           background: "rgba(224, 183, 255, 0.2)",
           color: "#fff",
@@ -199,18 +199,18 @@ const FolderUploadNode: React.FC<NodeProps<FolderUploadData>> = ({ data }) => {
         }
       }
   
-      @keyframes glowBorder {
+      @keyframes Border {
         0% {
-          border-color: rgba(196, 110, 255, 0.5);
-          box-shadow: 0 0 5px rgba(196, 110, 255, 0.5);
+          border-color: rgba(0, 0, 0, 0);
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0);
         }
         50% {
-          border-color: rgba(196, 110, 255, 1);
-          box-shadow: 0 0 15px rgba(196, 110, 255, 1);
+          border-color: rgba(255, 255, 255, 1);
+          box-shadow: 0 0 15px rgba(255, 255, 255, 1);
         }
         100% {
-          border-color: rgba(196, 110, 255, 0.5);
-          box-shadow: 0 0 5px rgba(196, 110, 255, 0.5);
+          border-color: rgba(0, 0, 0, 0);
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0);
         }
       }
     `}

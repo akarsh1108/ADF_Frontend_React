@@ -22,8 +22,8 @@ const ToggleNode: React.FC<NodeProps<ToggleNodeData>> = ({ data }) => {
   );
   const [copyCount, setCopyCount] = useState<number | null>(
     data.copyCount || null
-  ); 
-  
+  );
+
   useEffect(() => {
     data.onUpdate &&
       data.onUpdate({
@@ -55,7 +55,7 @@ const ToggleNode: React.FC<NodeProps<ToggleNodeData>> = ({ data }) => {
       databaseId,
       selectedOption,
       schedulerTime,
-      copyCount, 
+      copyCount,
     };
 
     data.onRunNode && data.onRunNode(inputData);
@@ -64,8 +64,8 @@ const ToggleNode: React.FC<NodeProps<ToggleNodeData>> = ({ data }) => {
   return (
     <div
       style={{
-        border: "1px solid rgba(196, 110, 255, 0.5)",
-        background: "rgba(0, 0, 50, 0.3)",
+        border: "1px solid rgba(0, 0, 0, 0)",
+        background: "rgba(72,109,121,0.3)",
         backdropFilter: "blur(10px)",
         boxShadow: "0 4px 10px rgba(224, 183, 255, 0.2)",
         borderRadius: "15px",
@@ -74,8 +74,8 @@ const ToggleNode: React.FC<NodeProps<ToggleNodeData>> = ({ data }) => {
         position: "relative",
         color: "#fff",
         fontFamily: "Arial, sans-serif",
-        margin: "20px auto", 
-        animation: "glowBorder 3s infinite",
+        margin: "20px auto",
+        animation: "Border 3s infinite",
         transition: "transform 0.3s ease-in-out",
       }}
       onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
@@ -106,7 +106,7 @@ const ToggleNode: React.FC<NodeProps<ToggleNodeData>> = ({ data }) => {
           width: "100%",
           padding: "8px",
           margin: "8px 0",
-          border: "1px solid rgba(196, 110, 255, 0.5)",
+          border: "1px solid rgba(0, 0, 0, 0)",
           borderRadius: "8px",
           background: "rgba(224, 183, 255, 0.2)",
           color: "#fff",
@@ -128,7 +128,7 @@ const ToggleNode: React.FC<NodeProps<ToggleNodeData>> = ({ data }) => {
           width: "100%",
           padding: "8px",
           margin: "8px 0",
-          border: "1px solid rgba(196, 110, 255, 0.5)",
+          border: "1px solid rgba(0, 0, 0, 0)",
           borderRadius: "8px",
           background: "rgba(224, 183, 255, 0.2)",
           color: "#fff",
@@ -191,7 +191,7 @@ const ToggleNode: React.FC<NodeProps<ToggleNodeData>> = ({ data }) => {
                   width: "100%",
                   padding: "8px",
                   margin: "8px 0",
-                  border: "1px solid rgba(196, 110, 255, 0.5)",
+                  border: "1px solid rgba(0, 0, 0, 0)",
                   borderRadius: "8px",
                   background: "rgba(224, 183, 255, 0.2)",
                   color: "#fff",
@@ -216,7 +216,7 @@ const ToggleNode: React.FC<NodeProps<ToggleNodeData>> = ({ data }) => {
                   width: "100%",
                   padding: "8px",
                   margin: "8px 0",
-                  border: "1px solid rgba(196, 110, 255, 0.5)",
+                  border: "1px solid rgba(0, 0, 0, 0)",
                   borderRadius: "8px",
                   background: "rgba(224, 183, 255, 0.2)",
                   color: "#fff",
@@ -278,22 +278,7 @@ const ToggleNode: React.FC<NodeProps<ToggleNodeData>> = ({ data }) => {
           transform: translateY(0);
         }
       }
-  
-      @keyframes glowBorder {
-        0% {
-          border-color: rgba(196, 110, 255, 0.5);
-          box-shadow: 0 0 5px rgba(196, 110, 255, 0.5);
-        }
-        50% {
-          border-color: rgba(196, 110, 255, 1);
-          box-shadow: 0 0 15px rgba(196, 110, 255, 1);
-        }
-        100% {
-          border-color: rgba(196, 110, 255, 0.5);
-          box-shadow: 0 0 5px rgba(196, 110, 255, 0.5);
-        }
-      }
-    `}
+      `}
       </style>
     </div>
   );

@@ -19,6 +19,24 @@ export const fetchDatabaseConnectionApi = async (req: ConnectionString) => {
     console.error("Error fetching database connection:", error);
   }
 };
+
+export const fetchDatabaseConnectionApiUrl = async (req: ConnectionString) => {
+  try {
+    const formData = new FormData();
+    if (req.url) formData.append("s", req.url);
+    else throw new Error("URL is empty");
+
+    const response = await axios.post(`${API_URL}/fileSourceUrl/`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching database connection URL:", error);
+  }
+};
 export const fetchFileConvertApi = async (file: FileManagement) => {
   try {
     const response = await axios.post(`${API_URL}/FileConvert/`, file, {
@@ -99,6 +117,12 @@ export const fetchDestinationConnectionApi = async (
       formData.append("file", file, req.filename); // Attach the file
     } else {
       throw new Error("Failed to convert base64 to Blob.");
+    }
+
+    if (req.url && req.url.length > 0) {
+      formData.append("url", req.url);
+    } else {
+      formData.append("url", "");
     }
 
     const response = await axios.post(`${API_URL}/copy-data/`, formData, {

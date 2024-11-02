@@ -94,10 +94,10 @@ const JupyterNotebookExecuteNode: React.FC<NodeProps<JupyterNotebookData>> = ({
   return (
     <div
       style={{
-        border: "1px solid rgba(196, 110, 255, 0.5)", // Animated border
-        background: "rgba(0, 0, 50, 0.3)", // Glass effect background
+        border: "1px solid rgba(219, 60, 48, 1)", // Animated border
+        background: "rgba(219, 60, 48, 0.1)", // Glass effect background
         backdropFilter: "blur(10px)",
-        boxShadow: "0 4px 10px rgba(224, 183, 255, 0.2)", // Enhanced shadow
+        boxShadow: "0 4px 10px rgba(219, 60, 48, 0.2)", // Enhanced shadow
         borderRadius: "15px",
         padding: "15px",
         width: "300px",
@@ -113,7 +113,6 @@ const JupyterNotebookExecuteNode: React.FC<NodeProps<JupyterNotebookData>> = ({
     >
       <Handle type="source" position={Position.Right} />
       <Handle type="target" position={Position.Left} />
-
       <h4
         style={{
           fontSize: "16px",
@@ -124,7 +123,6 @@ const JupyterNotebookExecuteNode: React.FC<NodeProps<JupyterNotebookData>> = ({
       >
         Jupyter Notebook Execute Activity
       </h4>
-
       {/* Mode Selection */}
       <label
         style={{ display: "block", marginBottom: "8px", fontSize: "14px" }}
@@ -138,9 +136,9 @@ const JupyterNotebookExecuteNode: React.FC<NodeProps<JupyterNotebookData>> = ({
           width: "100%",
           padding: "8px",
           margin: "8px 0",
-          border: "1px solid rgba(196, 110, 255, 0.5)",
+          border: "1px solid rgba(219, 60, 48, 1)",
           borderRadius: "8px",
-          background: "rgba(224, 183, 255, 0.2)",
+          background: "rgba(219, 60, 48, 0.2)",
           color: "#fff",
         }}
       >
@@ -148,7 +146,6 @@ const JupyterNotebookExecuteNode: React.FC<NodeProps<JupyterNotebookData>> = ({
         <option value="upload">Upload from Device</option>
       </select>
       <br />
-
       {/* File Selection Dropdown */}
       {fileMode === "dropdown" && (
         <>
@@ -164,9 +161,9 @@ const JupyterNotebookExecuteNode: React.FC<NodeProps<JupyterNotebookData>> = ({
               width: "100%",
               padding: "8px",
               margin: "8px 0",
-              border: "1px solid rgba(196, 110, 255, 0.5)",
+              border: "1px solid rgba(219, 60, 48, 1)",
               borderRadius: "8px",
-              background: "rgba(224, 183, 255, 0.2)",
+              background: "rgba(219, 60, 48, 0.2)",
               color: "#fff",
             }}
           >
@@ -183,7 +180,6 @@ const JupyterNotebookExecuteNode: React.FC<NodeProps<JupyterNotebookData>> = ({
           <br />
         </>
       )}
-
       {/* File Upload */}
       {fileMode === "upload" && (
         <>
@@ -200,22 +196,21 @@ const JupyterNotebookExecuteNode: React.FC<NodeProps<JupyterNotebookData>> = ({
               width: "100%",
               padding: "8px",
               margin: "8px 0",
-              border: "1px solid rgba(196, 110, 255, 0.5)",
+              border: "1px solid rgba(219, 60, 48, 1)",
               borderRadius: "8px",
-              background: "rgba(224, 183, 255, 0.2)",
+              background: "rgba(219, 60, 48, 0.2)",
               color: "#fff",
             }}
           />
           <br />
         </>
       )}
-
       {/* Run and Preview Buttons */}
       <button
         onClick={handleRunNode}
         style={{
           padding: "10px",
-          backgroundColor: "rgba(0, 150, 255, 0.6)", // Blue background for Run button
+          backgroundColor: "rgba(219, 60, 48, 0.6)",
           border: "none",
           borderRadius: "8px",
           color: "#fff",
@@ -227,21 +222,20 @@ const JupyterNotebookExecuteNode: React.FC<NodeProps<JupyterNotebookData>> = ({
         }}
         onMouseOver={(e) =>
           ((e.target as HTMLButtonElement).style.backgroundColor =
-            "rgba(0, 150, 255, 0.8)")
+            "rgba(219, 60, 48, 0.8)")
         }
         onMouseOut={(e) =>
           ((e.target as HTMLButtonElement).style.backgroundColor =
-            "rgba(0, 150, 255, 0.6)")
+            "rgba(219, 60, 48, 0.6)")
         }
       >
         Run Notebook
       </button>
-
       <button
         onClick={handlePreviewFile}
         style={{
           padding: "10px",
-          backgroundColor: "rgba(0, 200, 150, 0.6)", // Teal background for Preview button
+          backgroundColor: "rgba(219, 60, 48, 0.6)",
           border: "none",
           borderRadius: "8px",
           color: "#fff",
@@ -253,16 +247,15 @@ const JupyterNotebookExecuteNode: React.FC<NodeProps<JupyterNotebookData>> = ({
         }}
         onMouseOver={(e) =>
           ((e.target as HTMLButtonElement).style.backgroundColor =
-            "rgba(0, 200, 150, 0.8)")
+            "rgba(219, 60, 48, 0.8)")
         }
         onMouseOut={(e) =>
           ((e.target as HTMLButtonElement).style.backgroundColor =
-            "rgba(0, 200, 150, 0.6)")
+            "rgba(219, 60, 48, 0.6)")
         }
       >
         Preview Notebook
       </button>
-
       {/* Status Icons */}
       {data.status === "success" && (
         <FiCheckCircle
@@ -274,23 +267,9 @@ const JupyterNotebookExecuteNode: React.FC<NodeProps<JupyterNotebookData>> = ({
           style={{ color: "red", position: "absolute", top: 5, right: 5 }}
         />
       )}
-
-      {/* Preview Dialog */}
+      {/* preview dialog */}
       {isDialogOpen && fileContent && (
-        <div
-          className="modal"
-          style={{
-            position: "fixed",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            background: "rgba(255, 255, 255, 0.1)",
-            backdropFilter: "blur(10px)",
-            padding: "20px",
-            borderRadius: "10px",
-            boxShadow: "0 4px 10px rgba(0, 0, 0, 0.3)",
-          }}
-        >
+        <div className="modal">
           <div className="modal-content">
             <h4 style={{ color: "#fff" }}>Preview: {fileName}</h4>
             <pre style={{ color: "#fff" }}>{fileContent}</pre>
@@ -299,23 +278,23 @@ const JupyterNotebookExecuteNode: React.FC<NodeProps<JupyterNotebookData>> = ({
               onClick={() => setIsDialogOpen(false)}
               style={{
                 padding: "10px",
-                backgroundColor: "rgba(255, 100, 100, 0.6)", // Red background for Close button
+                backgroundColor: "rgba(219, 60, 48, 0.6)",
                 border: "none",
                 borderRadius: "8px",
                 color: "#fff",
                 fontWeight: "bold",
                 cursor: "pointer",
                 marginTop: "10px",
-                width: "100%",
+                width: "80%",
                 transition: "background 0.3s",
               }}
               onMouseOver={(e) =>
                 ((e.target as HTMLButtonElement).style.backgroundColor =
-                  "rgba(255, 100, 100, 0.8)")
+                  "rgba(219, 60, 48, 0.8)")
               }
               onMouseOut={(e) =>
                 ((e.target as HTMLButtonElement).style.backgroundColor =
-                  "rgba(255, 100, 100, 0.6)")
+                  "rgba(219, 60, 48, 0.6)")
               }
             >
               Close
@@ -325,32 +304,29 @@ const JupyterNotebookExecuteNode: React.FC<NodeProps<JupyterNotebookData>> = ({
       )}
       <style>
         {`
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
-    @keyframes glowBorder {
-      0% {
-        border-color: rgba(196, 110, 255, 0.5);
-        box-shadow: 0 0 5px rgba(196, 110, 255, 0.5);
-      }
-      50% {
-        border-color: rgba(196, 110, 255, 1);
-        box-shadow: 0 0 15px rgba(196, 110, 255, 1);
-      }
-      100% {
-        border-color: rgba(196, 110, 255, 0.5);
-        box-shadow: 0 0 5px rgba(196, 110, 255, 0.5);
-      }
-    }
-  `}
+// @keyframes glowBorder {
+//   0% {
+//     box-shadow: 0 0 1px rgba(219, 60, 48, 0.5), 0 0 2px rgba(219, 60, 48, 0.5), 0 0 3px rgba(219, 60, 48, 0.5);
+//   }
+//   50% {
+//     box-shadow: 0 0 4px rgba(219, 60, 48, 1), 0 0 6px rgba(219, 60, 48, 1), 0 0 8px rgba(219, 60, 48, 1);
+//   }
+//   100% {
+//     box-shadow: 0 0 1px rgba(219, 60, 48, 0.5), 0 0 2px rgba(219, 60, 48, 0.5), 0 0 3px rgba(219, 60, 48, 0.5);
+//   }
+// }
+`}
       </style>
     </div>
   );

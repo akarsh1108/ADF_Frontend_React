@@ -9,6 +9,7 @@ import {
 } from "../schemas/connection";
 import {
   fetchDatabaseConnectionApi,
+  fetchDatabaseConnectionApiUrl,
   fetchDestinationConnectionApi,
   fetchFileConvertApi,
   postApiCall,
@@ -16,7 +17,7 @@ import {
   uploadFiles,
   uploadJupyterNotebookApi,
 } from "../api/nodeApis";
-import { input } from "framer-motion/client";
+import { input, u } from "framer-motion/client";
 
 type Files = {
   id: number;
@@ -40,23 +41,37 @@ export const runNode = async (
 
   if (currentNode.type === "databaseConnection") {
     // Make sure the inputData is properly formatted
-    const req: ConnectionString = {
-      database: currentNode.data.selectedDatabase,
-      databaseId: currentNode.data.databaseId,
-      location: currentNode.data.location || "Source",
-    };
+    let resp;
     try {
-      const resp = await fetchDatabaseConnectionApi(req);
+      if (currentNode.data.url === "") {
+        const req: ConnectionString = {
+          database: currentNode.data.selectedDatabase,
+          databaseId: currentNode.data.databaseId,
+          location: currentNode.data.location || "Source",
+        };
+        resp = await fetchDatabaseConnectionApi(req);
+      } else {
+        const req: ConnectionString = {
+          database: currentNode.data.selectedDatabase,
+          location: currentNode.data.location || "Source",
+          databaseId: 0,
+          url: currentNode.data.url,
+        };
+        console.log("Request to fetch database connection API:", req.url);
+        resp = await fetchDatabaseConnectionApiUrl(req);
+      }
 
       if (resp) {
         responseData = {
-          databaseId: req.databaseId,
+          databaseId: currentNode.data.databaseId,
+          url: currentNode.data.url,
           files: resp.map((file: Files) => ({
             id: file.id,
             filename: file.filename,
             content: file.content,
             fileType: file.fileType,
-            databaseId: req.databaseId,
+            databaseId: currentNode.data.databaseId,
+            url: currentNode.data.url,
           })),
         };
 
@@ -116,6 +131,7 @@ export const runNode = async (
       filetype: currentNode.data.file.filetype,
       content: currentNode.data.file.content,
       source: currentNode.data.databaseId,
+      url: currentNode.data.url,
     };
     console.log("Request to destination connection API:", req);
     const resp = await fetchDestinationConnectionApi(req);

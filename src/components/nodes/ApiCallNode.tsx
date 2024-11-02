@@ -90,10 +90,10 @@ const APICallNode: React.FC<NodeProps<APICallData>> = ({ data }) => {
     <div
       style={{
         width: "300px",
-        border: "1px solid rgba(196, 110, 255, 0.5)", // Border style with animation
-        background: "rgba(0, 0, 50, 0.3)", // Soft blue background for glass effect
+        border: "1px solid rgba(26, 120, 194, 1)", // Border style with animation
+        background: "rgba(26, 120, 194, 0.1)", // Soft blue background for glass effect
         backdropFilter: "blur(10px)",
-        boxShadow: "0 4px 10px rgba(224, 183, 255, 0.2)", // Enhanced shadow effect
+        boxShadow: "0 4px 10px rgba(26, 120, 194, 0.2)", // Enhanced shadow effect
         borderRadius: "15px",
         padding: "15px",
         position: "relative",
@@ -139,9 +139,9 @@ const APICallNode: React.FC<NodeProps<APICallData>> = ({ data }) => {
           width: "100%",
           padding: "8px",
           margin: "8px 0",
-          border: "1px solid rgba(196, 110, 255, 0.5)",
+          border: "1px solid rgba(26, 120, 194, 1)",
           borderRadius: "8px",
-          background: "rgba(224, 183, 255, 0.2)",
+          background: "rgba(26, 120, 194, 0.2)",
           color: "#fff",
         }}
       />
@@ -164,9 +164,9 @@ const APICallNode: React.FC<NodeProps<APICallData>> = ({ data }) => {
           width: "100%",
           padding: "8px",
           margin: "8px 0",
-          border: "1px solid rgba(196, 110, 255, 0.5)",
+          border: "1px solid rgba(26, 120, 194, 1)",
           borderRadius: "8px",
-          background: "rgba(224, 183, 255, 0.2)",
+          background: "rgba(26, 120, 194, 0.2)",
           color: "#fff",
         }}
       />
@@ -187,9 +187,9 @@ const APICallNode: React.FC<NodeProps<APICallData>> = ({ data }) => {
           width: "100%",
           padding: "8px",
           margin: "8px 0",
-          border: "1px solid rgba(196, 110, 255, 0.5)",
+          border: "1px solid rgba(26, 120, 194, 1)",
           borderRadius: "8px",
-          background: "rgba(224, 183, 255, 0.2)",
+          background: "rgba(26, 120, 194, 0.2)",
           color: "#fff",
         }}
       >
@@ -220,9 +220,9 @@ const APICallNode: React.FC<NodeProps<APICallData>> = ({ data }) => {
             style={{
               width: "50%",
               padding: "8px",
-              border: "1px solid rgba(196, 110, 255, 0.5)",
+              border: "1px solid rgba(26, 120, 194, 1)",
               borderRadius: "8px",
-              background: "rgba(224, 183, 255, 0.2)",
+              background: "rgba(26, 120, 194, 0.2)",
               color: "#fff",
             }}
           />
@@ -236,9 +236,9 @@ const APICallNode: React.FC<NodeProps<APICallData>> = ({ data }) => {
             style={{
               width: "50%",
               padding: "8px",
-              border: "1px solid rgba(196, 110, 255, 0.5)",
+              border: "1px solid rgba(26, 120, 194, 1)",
               borderRadius: "8px",
-              background: "rgba(224, 183, 255, 0.2)",
+              background: "rgba(26, 120, 194, 0.2)",
               color: "#fff",
             }}
           />
@@ -295,9 +295,9 @@ const APICallNode: React.FC<NodeProps<APICallData>> = ({ data }) => {
             style={{
               width: "50%",
               padding: "8px",
-              border: "1px solid rgba(196, 110, 255, 0.5)",
+              border: "1px solid rgba(26, 120, 194, 1)",
               borderRadius: "8px",
-              background: "rgba(224, 183, 255, 0.2)",
+              background: "rgba(26, 120, 194, 0.2)",
               color: "#fff",
             }}
           />
@@ -311,9 +311,9 @@ const APICallNode: React.FC<NodeProps<APICallData>> = ({ data }) => {
             style={{
               width: "50%",
               padding: "8px",
-              border: "1px solid rgba(196, 110, 255, 0.5)",
+              border: "1px solid rgba(26, 120, 194, 1)",
               borderRadius: "8px",
-              background: "rgba(224, 183, 255, 0.2)",
+              background: "rgba(26, 120, 194, 0.2)",
               color: "#fff",
             }}
           />
@@ -354,7 +354,7 @@ const APICallNode: React.FC<NodeProps<APICallData>> = ({ data }) => {
         onClick={handleRunNode}
         style={{
           padding: "10px",
-          backgroundColor: "rgba(0, 150, 255, 0.6)",
+          backgroundColor: "rgba(26, 120, 194, 0.6)",
           border: "none",
           borderRadius: "8px",
           color: "#fff",
@@ -390,20 +390,17 @@ const APICallNode: React.FC<NodeProps<APICallData>> = ({ data }) => {
         }
       }
 
-      @keyframes glowBorder {
-        0% {
-          border-color: rgba(196, 110, 255, 0.5);
-          box-shadow: 0 0 5px rgba(196, 110, 255, 0.5);
-        }
-        50% {
-          border-color: rgba(196, 110, 255, 1);
-          box-shadow: 0 0 15px rgba(196, 110, 255, 1);
-        }
-        100% {
-          border-color: rgba(196, 110, 255, 0.5);
-          box-shadow: 0 0 5px rgba(196, 110, 255, 0.5);
-        }
-      }
+      // @keyframes glowBorder {
+      //   0% {
+      //     box-shadow: 0 0 1px rgba(26, 120, 194, 0.5), 0 0 2px rgba(26, 120, 194, 0.5), 0 0 3px rgba(26, 120, 194, 0.5);
+      //   }
+      //   50% {
+      //     box-shadow: 0 0 4px rgba(26, 120, 194, 1), 0 0 6px rgba(26, 120, 194, 1), 0 0 8px rgba(26, 120, 194, 1);
+      //   }
+      //   100% {
+      //     box-shadow: 0 0 1px rgba(26, 120, 194, 0.5), 0 0 2px rgba(26, 120, 194, 0.5), 0 0 3px rgba(26, 120, 194, 0.5);
+      //   }
+      // }
     `}
       </style>
     </div>

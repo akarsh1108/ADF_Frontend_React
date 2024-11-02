@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NodeProps, Handle, Position } from "reactflow";
+import { NodeProps, Handle, Position, Background } from "reactflow";
 import { FiCheckCircle, FiXCircle } from "react-icons/fi";
 
 type Files = {
@@ -126,7 +126,7 @@ const FileManagementNode: React.FC<NodeProps<FileManagementData>> = ({
     if (selectElement) {
       const options = selectElement.querySelectorAll("option");
       options.forEach((option) => {
-        option.style.backgroundColor = "rgba(224, 183, 255, 0.2)";
+        option.style.backgroundColor = "rgba(80,202,168,0.2)";
         option.style.color = "#fff";
       });
     }
@@ -135,10 +135,10 @@ const FileManagementNode: React.FC<NodeProps<FileManagementData>> = ({
   return (
     <div
       style={{
-        border: "1px solid rgba(196, 110, 255, 0.5)",
-        background: "rgba(0, 0, 50, 0.3)",
+        border: "1px solid rgba(80,202,168,0.5)",
+        background: "rgba(80,202,168,0.2)",
         backdropFilter: "blur(10px)",
-        boxShadow: "0 4px 10px rgba(224, 183, 255, 0.2)",
+        boxShadow: "0 4px 10px rgba(80,202,168,0.2)",
         borderRadius: "15px",
         padding: "15px",
         width: "300px",
@@ -147,7 +147,7 @@ const FileManagementNode: React.FC<NodeProps<FileManagementData>> = ({
         fontFamily: "Arial, sans-serif",
         margin: "20px auto", // Centered with some margin
         transition: "transform 0.3s ease-in-out",
-        animation: "glowBorder 3s infinite", // Glowing border animation
+        // animation: "Border 3s infinite", // ing border animation
       }}
       onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
       onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
@@ -178,13 +178,14 @@ const FileManagementNode: React.FC<NodeProps<FileManagementData>> = ({
         onChange={handleFileSelect}
         className="custom-select"
         style={{
-          width: "100%",
-          padding: "8px",
-          margin: "8px 0",
-          border: "1px solid rgba(196, 110, 255, 0.5)",
+          appearance: "none" /* Hide default arrow */,
+          border: "1px solid rgba(80,202,168,1)" /* New border color */,
+          color: "white" /* Font color */,
           borderRadius: "8px",
-          background: "rgba(224, 183, 255, 0.2)",
-          color: "#fff",
+          padding: "8px",
+          width: "100%",
+          margin: "8px 0",
+          transition: "background 0.3s, border-color 0.3s",
         }}
       >
         {data.files && data.files.length > 0 ? (
@@ -193,7 +194,9 @@ const FileManagementNode: React.FC<NodeProps<FileManagementData>> = ({
               key={file.id}
               value={file.id}
               style={{
-                color: "#fff",
+                backgroundColor: "rgba(80,202,168,0.2)", // Updated background color
+                color: "white",
+                border: "1px solid rgba(80,202,168,1)",
               }}
             >
               {file.filename}
@@ -203,6 +206,7 @@ const FileManagementNode: React.FC<NodeProps<FileManagementData>> = ({
           <option value="">No files</option>
         )}
       </select>
+
       <br />
 
       <label
@@ -215,12 +219,12 @@ const FileManagementNode: React.FC<NodeProps<FileManagementData>> = ({
         value={fileName.split(".")[0]}
         onChange={(e) => setFileName(e.target.value)}
         style={{
-          width: "100%",
+          width: "94%",
           padding: "8px",
           margin: "8px 0",
-          border: "1px solid rgba(196, 110, 255, 0.5)",
+          border: "1px solid rgba(80,202,168,1)",
           borderRadius: "8px",
-          background: "rgba(224, 183, 255, 0.2)",
+          background: "rgba(80,202,168,0.2)",
           color: "#fff",
         }}
       />
@@ -238,9 +242,9 @@ const FileManagementNode: React.FC<NodeProps<FileManagementData>> = ({
           width: "100%",
           padding: "8px",
           margin: "8px 0",
-          border: "1px solid rgba(196, 110, 255, 0.5)",
+          border: "1px solid rgba(80,202,168,1)" /* New border color */,
           borderRadius: "8px",
-          background: "rgba(224, 183, 255, 0.2)",
+          background: "rgba(80,202,168,0.2)",
           color: "#fff",
         }}
       >
@@ -255,7 +259,7 @@ const FileManagementNode: React.FC<NodeProps<FileManagementData>> = ({
         onClick={handleRunNode}
         style={{
           padding: "10px",
-          backgroundColor: "rgba(0, 150, 255, 0.6)", // Blue background for Run button
+          backgroundColor: "rgba(80,202,168,0.6)", // New background color for Run button
           border: "none",
           borderRadius: "8px",
           color: "#fff",
@@ -267,11 +271,11 @@ const FileManagementNode: React.FC<NodeProps<FileManagementData>> = ({
         }}
         onMouseOver={(e) =>
           ((e.target as HTMLElement).style.backgroundColor =
-            "rgba(0, 150, 255, 0.8)")
+            "rgba(80,202,168,0.8)")
         }
         onMouseOut={(e) =>
           ((e.target as HTMLElement).style.backgroundColor =
-            "rgba(0, 150, 255, 0.6)")
+            "rgba(80,202,168,0.6)")
         }
       >
         Run Activity
@@ -283,7 +287,7 @@ const FileManagementNode: React.FC<NodeProps<FileManagementData>> = ({
             onClick={handlePreview}
             style={{
               padding: "10px",
-              backgroundColor: "rgba(0, 200, 150, 0.6)", // Teal background for Preview button
+              backgroundColor: "rgba(80,202,168,0.6)", // New background color for Preview button
               border: "none",
               borderRadius: "8px",
               color: "#fff",
@@ -295,11 +299,11 @@ const FileManagementNode: React.FC<NodeProps<FileManagementData>> = ({
             }}
             onMouseOver={(e) =>
               ((e.target as HTMLElement).style.backgroundColor =
-                "rgba(0, 200, 150, 0.8)")
+                "rgba(80,202,168,0.8)")
             }
             onMouseOut={(e) =>
               ((e.target as HTMLElement).style.backgroundColor =
-                "rgba(0, 200, 150, 0.6)")
+                "rgba(80,202,168,0.6)")
             }
           >
             Preview File
@@ -309,7 +313,7 @@ const FileManagementNode: React.FC<NodeProps<FileManagementData>> = ({
             onClick={handleDownload}
             style={{
               padding: "10px",
-              backgroundColor: "rgba(0, 200, 150, 0.6)", // Teal background for Download button
+              backgroundColor: "rgba(80,202,168,0.6)", // New background color for Download button
               border: "none",
               borderRadius: "8px",
               color: "#fff",
@@ -319,11 +323,11 @@ const FileManagementNode: React.FC<NodeProps<FileManagementData>> = ({
             }}
             onMouseOver={(e) =>
               ((e.target as HTMLElement).style.backgroundColor =
-                "rgba(0, 200, 150, 0.8)")
+                "rgba(80,202,168,0.8)")
             }
             onMouseOut={(e) =>
               ((e.target as HTMLElement).style.backgroundColor =
-                "rgba(0, 200, 150, 0.6)")
+                "rgba(80,202,168,0.6)")
             }
           >
             Download File
@@ -350,14 +354,16 @@ const FileManagementNode: React.FC<NodeProps<FileManagementData>> = ({
             <iframe
               src={fileContentUrl}
               style={{
+                marginTop: "10px",
                 width: "100%",
                 height: "500px",
                 border: "2px solid #ccc",
-                backgroundColor: "#800080",
+                backgroundColor: "rgba(80,202,168,0.6)",
                 borderRadius: "8px",
               }}
               title="file-preview"
             />
+
             <button
               onClick={() => setIsDialogOpen(false)}
               style={{
@@ -399,19 +405,19 @@ const FileManagementNode: React.FC<NodeProps<FileManagementData>> = ({
         }
       }
   
-      @keyframes glowBorder {
-        0% {
-          border-color: rgba(196, 110, 255, 0.5);
-          box-shadow: 0 0 5px rgba(196, 110, 255, 0.5);
-        }
-        50% {
-          border-color: rgba(196, 110, 255, 1);
-          box-shadow: 0 0 15px rgba(196, 110, 255, 1);
-        }
-        100% {
-          border-color: rgba(196, 110, 255, 0.5);
-          box-shadow: 0 0 5px rgba(196, 110, 255, 0.5);
-        }
+      // @keyframes glowBorder {
+      //   0% {
+      //     border-color: rgba(80,202,168,0.5);
+      //     box-shadow: 0 0 5px rgba(80,202,168,0.5);
+      //   }
+      //   50% {
+      //     border-color: rgba(80,202,168,1);
+      //     box-shadow: 0 0 15px rgba(80,202,168,1);
+      //   }
+      //   100% {
+      //     border-color: rgba(80,202,168,0.5);
+      //     box-shadow: 0 0 5px rgba(80,202,168,0.5);
+      //   }
       }
     `}
       </style>

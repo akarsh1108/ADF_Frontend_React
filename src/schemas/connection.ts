@@ -5,6 +5,7 @@ export const connectionString = z.object({
   database: z.string(),
   databaseId: z.number(),
   location: z.string(),
+  url: z.string().optional(),
 });
 export type ConnectionString = z.infer<typeof connectionString>;
 
@@ -22,6 +23,7 @@ export const DestinationConnection = z.object({
   filename: z.string(),
   filetype: z.string(),
   content: z.string(),
+  url: z.string().optional(),
 });
 
 export type DestinationConnection = z.infer<typeof DestinationConnection>;

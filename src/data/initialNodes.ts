@@ -9,6 +9,7 @@ const initialNodes: Node[] = [
       selectedDatabase: "SSMS",
       databaseId: 1,
       location: "Source",
+      url: "",
       status: "idle", // Tracks success/error status
       onUpdate: (updatedData: any) => {
         console.log("Database connection updated: ", updatedData);
@@ -48,6 +49,7 @@ const initialNodes: Node[] = [
       },
       selectedDatabase: "SSMS",
       databaseId: 1,
+      url: "",
       location: "Destination",
       status: "idle",
       onUpdate: (updatedData: any) => {

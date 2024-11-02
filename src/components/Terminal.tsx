@@ -8,6 +8,21 @@ const Terminal = () => {
   const [label, setLabel] = useState<string[]>([]);
   const terminalRef = useRef<HTMLDivElement>(null);
 
+  //   {
+  //     "label": "Jupyter Notebook Activity",
+  //     "message": "Error encountered during execution",
+  //     "last_successful_cell": {
+  //         "success": true,
+  //         "cell_position": 1,
+  //         "output": "ggggggggggutttttt\n"
+  //     },
+  //     "error_details": {
+  //         "type": "TypeError",
+  //         "message": "unsupported operand type(s) for /: 'str' and 'int'",
+  //         "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\APRIYADARS1\\OneDrive - Rockwell Automation, Inc\\Desktop\\Project\\ADF_Backend\\main.py\", line 259, in run_code_cell\n    exec(code)\n  File \"<string>\", line 6, in <module>\nTypeError: unsupported operand type(s) for /: 'str' and 'int'\n"
+  //     }
+  // }
+
   useEffect(() => {
     const channel = pusherClient.subscribe("logs-channel");
     channel.bind(
@@ -16,8 +31,14 @@ const Terminal = () => {
         status: string;
         label?: string;
         message: string;
+        detail?: any;
       }) {
-        setLogs((prevLogs) => [...prevLogs, data.message]);
+        setLogs((prevLogs) => [
+          ...prevLogs,
+          data.detail
+            ? `${data.message} ${data.detail.message} ${data.detail.traceback}`
+            : data.message,
+        ]);
         setSuccess((prevSuccess) => [...prevSuccess, data.status]);
         setLabel((prevLabel) => [
           ...prevLabel,
@@ -81,7 +102,7 @@ const Terminal = () => {
       <style>{`
         .terminal-container {
           background: #000;
-          border: 1px solid rgba(196, 110, 255, 0.5);
+          border: 1px solid rgba(255, 255, 255, 0.8);
           box-shadow: 0 4px 15px rgba(224, 183, 255, 0.2);
           color: white;
           font-family: "Courier New", Courier, monospace;
