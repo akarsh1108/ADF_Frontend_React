@@ -103,8 +103,6 @@ const DatabaseConnectionNode: React.FC<NodeProps<DatabaseConnectionData>> = ({
         }
       >
         <option value="SSMS">SSMS</option>
-        <option value="SSMS2">SSMS2</option>
-        <option value="SSMS3">SSMS3</option>
       </select>
 
       <label

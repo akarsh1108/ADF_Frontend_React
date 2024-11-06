@@ -20,6 +20,7 @@ import APICallNode from "../components/nodes/ApiCallNode";
 import JupyterNotebookExecuteNode from "../components/nodes/JupyterNotebookNode";
 import FolderUploadNode from "../components/nodes/UploadeNode";
 import ToggleNode from "../components/nodes/CopySchedulers";
+import MLRegressionActivity from "../components/nodes/MlNodeActivity";
 
 const nodeTypes = {
   databaseConnection: DatabaseConnectionNode,
@@ -29,6 +30,7 @@ const nodeTypes = {
   jupyterNotebookExecute: JupyterNotebookExecuteNode,
   folderUploadNode: FolderUploadNode,
   toggleNode: ToggleNode,
+  mlRegressionModel: MLRegressionActivity,
 };
 
 const CustomFlow: React.FC = () => {

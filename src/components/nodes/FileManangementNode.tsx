@@ -25,11 +25,11 @@ const FileManagementNode: React.FC<NodeProps<FileManagementData>> = ({
 }) => {
   const [fileName, setFileName] = useState(data.fileName || "Example.txt");
   const [fileFormat, setFileFormat] = useState(data.nameToConnect || "txt");
-  const [selectedFile, setSelectedFile] = useState(data.selectedFile || "");
+  const [selectedFile, setSelectedFile] = useState("");
   const [fileContentUrl, setFileContentUrl] = useState<string | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [fileId, setFileId] = useState<number | null>(null);
-
+  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   useEffect(() => {
     data.onUpdate &&
       data.onUpdate({
@@ -147,7 +147,6 @@ const FileManagementNode: React.FC<NodeProps<FileManagementData>> = ({
         fontFamily: "Arial, sans-serif",
         margin: "20px auto", // Centered with some margin
         transition: "transform 0.3s ease-in-out",
-        // animation: "Border 3s infinite", // ing border animation
       }}
       onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
       onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
@@ -194,7 +193,7 @@ const FileManagementNode: React.FC<NodeProps<FileManagementData>> = ({
               key={file.id}
               value={file.id}
               style={{
-                backgroundColor: "rgba(80,202,168,0.2)", // Updated background color
+                backgroundColor: "rgba(80,202,168,0.2)",
                 color: "white",
                 border: "1px solid rgba(80,202,168,1)",
               }}
@@ -242,7 +241,7 @@ const FileManagementNode: React.FC<NodeProps<FileManagementData>> = ({
           width: "100%",
           padding: "8px",
           margin: "8px 0",
-          border: "1px solid rgba(80,202,168,1)" /* New border color */,
+          border: "1px solid rgba(80,202,168,1)",
           borderRadius: "8px",
           background: "rgba(80,202,168,0.2)",
           color: "#fff",
@@ -340,12 +339,11 @@ const FileManagementNode: React.FC<NodeProps<FileManagementData>> = ({
           style={{ color: "green", position: "absolute", top: 5, right: 5 }}
         />
       )}
-      {data.status === "error" ||
-        (!data.files && (
-          <FiXCircle
-            style={{ color: "red", position: "absolute", top: 5, right: 5 }}
-          />
-        ))}
+      {data.status === "error" && !data.files && (
+        <FiXCircle
+          style={{ color: "red", position: "absolute", top: 5, right: 5 }}
+        />
+      )}
 
       {/* File Preview Dialog */}
       {isDialogOpen && fileContentUrl && (

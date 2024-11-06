@@ -84,7 +84,7 @@ const FolderUploadNode: React.FC<NodeProps<FolderUploadData>> = ({ data }) => {
           filename: file?.name,
           format: file?.type,
           file: file,
-          content: fileContent, // Pass the file content
+          content: fileContent,
           databaseId: data.databaseId,
         },
       ],
@@ -95,10 +95,10 @@ const FolderUploadNode: React.FC<NodeProps<FolderUploadData>> = ({ data }) => {
   return (
     <div
       style={{
-        border: "1px solid rgba(0, 0, 0, 0)",
-        background: "rgba(0, 0, 50, 0.3)", // Glass effect background
+        border: "1px solid rgba(255, 255, 255, 1)",
+        background: "rgba(255, 255, 255, 0.15)",
         backdropFilter: "blur(10px)",
-        boxShadow: "0 4px 10px rgba(224, 183, 255, 0.2)", // Enhanced shadow
+        boxShadow: "0 4px 10px rgba(224, 183, 255, 0.2)",
         borderRadius: "15px",
         padding: "15px",
         width: "300px",
@@ -106,8 +106,6 @@ const FolderUploadNode: React.FC<NodeProps<FolderUploadData>> = ({ data }) => {
         color: "#fff",
         fontFamily: "Arial, sans-serif",
         margin: "20px auto",
-        transition: "transform 0.3s ease-in-out",
-        animation: "Border 3s infinite, fadeIn 1s ease-in-out", // Combined animations
       }}
       onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
       onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
@@ -135,7 +133,7 @@ const FolderUploadNode: React.FC<NodeProps<FolderUploadData>> = ({ data }) => {
       </label>
       <input
         type="file"
-        multiple={false} // Disable multiple uploads
+        multiple={false}
         onChange={handleFolderUpload}
         accept=".csv,.txt,.json,.ipynb"
         style={{
@@ -154,7 +152,7 @@ const FolderUploadNode: React.FC<NodeProps<FolderUploadData>> = ({ data }) => {
         onClick={handleRunNode}
         style={{
           padding: "10px",
-          backgroundColor: "rgba(0, 150, 255, 0.6)", // Blue background for Run button
+          backgroundColor: "rgba(0, 150, 255, 0.6)",
           border: "none",
           borderRadius: "8px",
           color: "#fff",

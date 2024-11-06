@@ -1,3 +1,4 @@
+import { label } from "framer-motion/client";
 import { Node } from "reactflow";
 
 const initialNodes: Node[] = [
@@ -65,7 +66,7 @@ const initialNodes: Node[] = [
     type: "apiCall",
     position: { x: 360, y: 430 },
     data: {
-      title: "Data1",
+      title: "Data",
       url: "https://api.example.com/data",
       method: "POST",
       headers: [
@@ -118,7 +119,7 @@ const initialNodes: Node[] = [
   {
     id: "6",
     type: "folderUploadNode",
-    position: { x: 0, y: 430 },
+    position: { x: 1100, y: 180 },
     data: {
       filename: "",
       fileType: "",
@@ -135,10 +136,11 @@ const initialNodes: Node[] = [
   {
     id: "7",
     type: "toggleNode",
-    position: { x: 1100, y: 300 },
+    position: { x: 1100, y: 430 },
     data: {
       selectedDatabase: "SSMS",
       databaseId: 1,
+      label: "Tumbling Window",
       selectedOption: "event",
       schedulerTime: null,
       copyCount: null,
@@ -148,6 +150,24 @@ const initialNodes: Node[] = [
       },
       onRunNode: (inputData: any) => {
         console.log("Running toggle node with: ", inputData);
+      },
+    },
+  },
+  {
+    id: "8",
+    type: "mlRegressionModel",
+    position: { x: 0, y: 430 },
+    data: {
+      target_Column: "",
+      filename: "",
+      fileType: "",
+      files: [],
+      status: "idle",
+      onUpdate: (updatedData: any) => {
+        console.log("ML node updated: ", updatedData);
+      },
+      onRunNode: (inputData: any) => {
+        console.log("Running ML Node with: ", inputData);
       },
     },
   },

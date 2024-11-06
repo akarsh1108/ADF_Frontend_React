@@ -1,6 +1,5 @@
 import axios from "axios";
 import {
-  ApiCall,
   ConnectionString,
   DestinationConnection,
   FileManagement,
@@ -8,6 +7,7 @@ import {
 } from "../schemas/connection";
 
 const API_URL = "http://127.0.0.1:8000";
+
 export const fetchDatabaseConnectionApi = async (req: ConnectionString) => {
   try {
     console.log(req);
@@ -69,6 +69,8 @@ export const fetchDestinationConnectionApi = async (
           base64 = btoa(unescape(encodeURIComponent(base)));
         } else if (fileType === "text/csv") {
           base64 = btoa(unescape(encodeURIComponent(base)));
+        } else if (fileType === "image/png") {
+          base64 = btoa(unescape(encodeURIComponent(base))); // Ensure the base64 string is correctly encoded
         }
         // Check if the string contains a base64 prefix (e.g., "data:<filetype>;base64,") and remove it
         const cleanedBase64 = base64.includes("base64,")
@@ -199,6 +201,25 @@ export const schedulingActivity = async (req: Scheduling) => {
   try {
     const response = await axios.post(`${API_URL}/scheduling/`, req);
     return response.data;
+  } catch (error) {
+    console.error("Error fetching terminal logs:", error);
+  }
+};
+
+export const mlRegressionActivity = async (
+  target_Column: string,
+  file: File
+) => {
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("target_column", target_Column);
+    const response = await axios.post(`${API_URL}/plot_regression`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return response.data.image;
   } catch (error) {
     console.error("Error fetching terminal logs:", error);
   }

@@ -25,7 +25,7 @@ const JupyterNotebookExecuteNode: React.FC<NodeProps<JupyterNotebookData>> = ({
 }) => {
   const [fileName, setFileName] = useState(data.fileName || "");
   const [fileContent, setFileContent] = useState<string | null>(null);
-  const [fileMode, setFileMode] = useState<"upload" | "dropdown">("dropdown");
+  const [fileMode, setFileMode] = useState<"upload" | "dropdown">("upload");
   const [selectedFileId, setSelectedFileId] = useState<string | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [file, setFile] = useState<File | null>(null);
@@ -47,7 +47,7 @@ const JupyterNotebookExecuteNode: React.FC<NodeProps<JupyterNotebookData>> = ({
     );
     const selectOne = data.files.find((file) => file.id === Number(selectedId));
     if (selectOne) {
-      data.files = [selectOne]; // Select only one file from the list
+      data.files = [selectOne];
     }
 
     if (selectedFileObj) {
@@ -94,19 +94,18 @@ const JupyterNotebookExecuteNode: React.FC<NodeProps<JupyterNotebookData>> = ({
   return (
     <div
       style={{
-        border: "1px solid rgba(219, 60, 48, 1)", // Animated border
-        background: "rgba(219, 60, 48, 0.1)", // Glass effect background
-        backdropFilter: "blur(10px)",
-        boxShadow: "0 4px 10px rgba(219, 60, 48, 0.2)", // Enhanced shadow
+        border: "1px solid rgba(219, 60, 48, 1)",
+        background: "rgba(219, 60, 48, 0.1)",
+        boxShadow: "0 4px 10px rgba(219, 60, 48, 0.2)",
         borderRadius: "15px",
         padding: "15px",
         width: "300px",
         position: "relative",
         color: "#fff",
         fontFamily: "Arial, sans-serif",
-        margin: "20px auto", // Centered with some margin
+        margin: "20px auto",
         transition: "transform 0.3s ease-in-out",
-        animation: "glowBorder 3s infinite", // Glowing border animation
+        animation: "glowBorder 3s infinite",
       }}
       onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
       onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
@@ -142,7 +141,7 @@ const JupyterNotebookExecuteNode: React.FC<NodeProps<JupyterNotebookData>> = ({
           color: "#fff",
         }}
       >
-        <option value="dropdown">Select from JSON</option>
+        {/* <option value="dropdown">Select from JSON</option> */}
         <option value="upload">Upload from Device</option>
       </select>
       <br />

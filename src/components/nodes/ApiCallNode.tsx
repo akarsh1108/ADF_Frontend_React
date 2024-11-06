@@ -90,17 +90,17 @@ const APICallNode: React.FC<NodeProps<APICallData>> = ({ data }) => {
     <div
       style={{
         width: "300px",
-        border: "1px solid rgba(26, 120, 194, 1)", // Border style with animation
-        background: "rgba(26, 120, 194, 0.1)", // Soft blue background for glass effect
+        border: "1px solid rgba(26, 120, 194, 1)", 
+        background: "rgba(26, 120, 194, 0.1)", 
         backdropFilter: "blur(10px)",
-        boxShadow: "0 4px 10px rgba(26, 120, 194, 0.2)", // Enhanced shadow effect
+        boxShadow: "0 4px 10px rgba(26, 120, 194, 0.2)", 
         borderRadius: "15px",
         padding: "15px",
         position: "relative",
         color: "#fff",
         fontFamily: "Arial, sans-serif",
-        margin: "20px auto", // Centered with some margin
-        animation: "glowBorder 3s infinite, fadeIn 1s ease-in-out", // Combined animations
+        margin: "20px auto", 
+        animation: "glowBorder 3s infinite, fadeIn 1s ease-in-out", 
         transition: "transform 0.3s ease-in-out",
       }}
       onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}

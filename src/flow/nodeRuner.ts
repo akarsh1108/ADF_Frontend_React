@@ -12,12 +12,12 @@ import {
   fetchDatabaseConnectionApiUrl,
   fetchDestinationConnectionApi,
   fetchFileConvertApi,
+  mlRegressionActivity,
   postApiCall,
   schedulingActivity,
   uploadFiles,
   uploadJupyterNotebookApi,
 } from "../api/nodeApis";
-import { input, u } from "framer-motion/client";
 
 type Files = {
   id: number;
@@ -263,12 +263,17 @@ export const runNode = async (
   } else if (currentNode.type === "toggleNode") {
     console.log("Toggle Node ", inputData);
     const req: Scheduling = {
-      destination: inputData.databaseId,
-      source: inputData.databaseId === 1 ? 2 : 1,
-      label: inputData.selectedOption,
-      interval: inputData.copyCount == null ? 1000000 : inputData.copyCount,
+      destination: currentNode.data.databaseId,
+      source: currentNode.data.databaseId === 1 ? 2 : 1,
+      label: currentNode.data.label,
+      interval:
+        currentNode.data.copyCount == null
+          ? 1000000
+          : currentNode.data.copyCount,
       schedular:
-        inputData.schedulerTime == null ? 1000000 : inputData.schedulerTime,
+        currentNode.data.schedulerTime == null
+          ? 1000000
+          : currentNode.data.schedulerTime,
     };
     console.log("Request to Scheduling API:", req);
     const res = await schedulingActivity(req);
@@ -277,6 +282,36 @@ export const runNode = async (
       ...inputData,
       status: "success",
     };
+  } else if (currentNode.type === "mlRegressionModel") {
+    const req = {
+      files: inputData.file,
+      targetColumn: currentNode.data.targetColumn,
+      title: inputData.title,
+    };
+    console.log("Request to ML Regression API:", req);
+    const resp = await mlRegressionActivity(req.targetColumn, req.files);
+    console.log("Response from ML Regression API:", resp);
+    if (resp) {
+      // Convert response content to Blob
+      // const blob = new Blob([resp], { type: "image/png" });
+      // // Create an object URL
+      // const fileContentUrl = URL.createObjectURL(blob);
+
+      responseData = {
+        ...inputData,
+        status: "success",
+        file: {
+          filename: currentNode.data.filename,
+          filetype: "image/png",
+          content: resp,
+        },
+      };
+    } else {
+      responseData = {
+        ...inputData,
+        status: "error",
+      };
+    }
   }
 
   // Now pass the data to the next nodes

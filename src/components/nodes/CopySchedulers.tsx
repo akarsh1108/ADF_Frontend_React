@@ -5,7 +5,7 @@ import { NodeProps, Handle, Position } from "reactflow";
 type ToggleNodeData = {
   selectedOption: "Event Based" | "Tumbling Window" | "Scheduler";
   schedulerTime: number | null;
-  copyCount: number | null; // Add copyCount to data type
+  copyCount: number | null;
   onRunNode?: (inputData: any) => void;
   onUpdate?: (updatedData: any) => void;
   status: "idle" | "success" | "error";
@@ -13,7 +13,7 @@ type ToggleNodeData = {
 
 const ToggleNode: React.FC<NodeProps<ToggleNodeData>> = ({ data }) => {
   const [selectedDatabase, setSelectedDatabase] = useState("SSMS");
-  const [databaseId, setDatabaseId] = useState(1); // Initialize databaseId state'
+  const [databaseId, setDatabaseId] = useState(1);
   const [selectedOption, setSelectedOption] = useState(
     data.selectedOption || "Event Based"
   );
@@ -29,7 +29,7 @@ const ToggleNode: React.FC<NodeProps<ToggleNodeData>> = ({ data }) => {
       data.onUpdate({
         selectedDatabase,
         databaseId,
-        selectedOption,
+        label: selectedOption,
         schedulerTime,
         copyCount,
       });
@@ -64,7 +64,7 @@ const ToggleNode: React.FC<NodeProps<ToggleNodeData>> = ({ data }) => {
   return (
     <div
       style={{
-        border: "1px solid rgba(0, 0, 0, 0)",
+        border: "1px solid rgba(72,109,121,1)",
         background: "rgba(72,109,121,0.3)",
         backdropFilter: "blur(10px)",
         boxShadow: "0 4px 10px rgba(224, 183, 255, 0.2)",
@@ -75,8 +75,8 @@ const ToggleNode: React.FC<NodeProps<ToggleNodeData>> = ({ data }) => {
         color: "#fff",
         fontFamily: "Arial, sans-serif",
         margin: "20px auto",
-        animation: "Border 3s infinite",
-        transition: "transform 0.3s ease-in-out",
+        // animation: "Border 3s infinite",
+        // transition: "transform 0.3s ease-in-out",
       }}
       onMouseOver={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
       onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
@@ -165,19 +165,6 @@ const ToggleNode: React.FC<NodeProps<ToggleNodeData>> = ({ data }) => {
         </label>
         <br />
 
-        <label>
-          <input
-            type="radio"
-            name="option"
-            value="Scheduler"
-            checked={selectedOption === "Scheduler"}
-            onChange={handleOptionChange}
-          />
-          Scheduler
-        </label>
-        <br />
-
-        {/* Show time input when scheduler is selected */}
         {selectedOption === "Scheduler" && (
           <>
             <label style={{ display: "block", marginBottom: "8px" }}>
